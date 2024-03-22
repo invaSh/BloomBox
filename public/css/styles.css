@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+
+*{
+    font-family: "Syne", sans-serif;
+}
+
+
+.customHeader{
+    background-color: #eae1d0 !important;
+    color: #413555 !important;
+}
+
+.btn-primary, .btn-outline-light:hover{
+    background-color: #413555 !important;
+    color: #F9E1B5 !important;
+    border-color: transparent;
+}
+
+.btn-primary:hover, .btn-outline-light{
+    border-color: #413555 !important;
+    color: #413555 !important;
+    background-color: #eae1d0 !important;
+}
+
+.border-bottom{
+    border-bottom: 1px solid !important;
+}
+
+.card{
+    transition: .3s;
+    color:#413555 !important;
+}
+
+.card:hover{
+    transform: scale(1.1);
+}
+
+.bg-primary{
+    background-color: #413555 !important;
+}
+
+.text-dark{
+    color:#413555 !important;
+}

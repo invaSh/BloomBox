@@ -10,14 +10,14 @@
     color: #413555 !important;
 }
 
-.btn-primary, .btn-outline-light:hover{
+.btn-primary, .btn-outline-light:hover, .kartBtn:hover{
     background-color: #413555 !important;
-    color: #F9E1B5 !important;
+    color: #f5ecda !important;
     border-color: transparent;
 }
 
 .btn-primary:hover, .btn-outline-light{
-    border-color: #413555 !important;
+    border-color: transparent;
     color: #413555 !important;
     background-color: #eae1d0 !important;
 }
@@ -39,6 +39,38 @@
     background-color: #413555 !important;
 }
 
+.lrnM{
+    border-color: #413555 !important;
+}
+
 .text-dark{
     color:#413555 !important;
+}
+
+.bg-secondary{
+    background-color: #eae1d0 !important;
+}
+
+.img-custom{
+    width: 30% !important;
+}
+
+.kartBtn{
+    margin-top: -15px !important;
+    background-color: #eae1d0 !important;
+}
+
+.customC{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: none !important;
+    border-radius: 10px;
+}
+
+.customC img{
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.customC:hover{
+    transform:none;
 }

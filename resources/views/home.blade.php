@@ -13,7 +13,7 @@
                             dedicated to bringing beauty and joy to your doorstep.</p>
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                             <a class="btn btn-primary btn-lg px-4 me-sm-3 customBtn" href="#features">Get Started</a>
-                            <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
+                            <a class="btn btn-outline-light btn-lg px-4 lrnM" href="#!">Learn More</a>
                         </div>
                     </div>
                 </div>

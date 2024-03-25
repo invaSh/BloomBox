@@ -18,8 +18,11 @@
             </div>
 
             <div class="row gx-5">
-                <x-home-card></x-home-card>
+                @foreach($products as $product)
+                <x-home-card :image="$product->imageUrl" :name="$product->name" :description="$product->description" />
+                @endforeach
             </div>
+            
 
             <div class="p-5 bg-light m-5">
                 <div class="container">
@@ -35,11 +38,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <x-review-card></x-review-card>
-                        <x-review-card></x-review-card>
+
+                        <x-review-card>
+                            
+                        </x-review-card>
                     </div>
                 </div>
             </div>
+
+
 
             <x-newsletter></x-newsletter>
             

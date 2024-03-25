@@ -10,7 +10,9 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <x-card></x-card>
+                @foreach($allProducts as $product)
+                    <x-card :image="$product->imageUrl" :name="$product->name" :description="$product->description" :price="$product->price"></x-card>
+                @endforeach
             </div>
         </div>
     </section>

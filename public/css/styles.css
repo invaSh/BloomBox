@@ -66,11 +66,6 @@
     border-radius: 10px;
 }
 
-.customC img{
-    padding: 7px;
-    border-radius: 10px;
-}
-
 .customC:hover{
     transform:none;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title></title>
+    <title>@yield('title', '')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -18,7 +18,7 @@
 
     <style>
         #logo {
-            height: 80px !important;
+            height: 90px !important;
         }
 
         .navbar {
@@ -179,7 +179,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active specialHover" aria-current="page" href="#">
+                            <a class="nav-link active specialHover" aria-current="page" href="/login">
                                 Login/Register
                             </a>
                         </li>

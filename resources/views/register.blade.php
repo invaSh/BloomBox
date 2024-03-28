@@ -13,10 +13,18 @@
                           style="width: 185px;" alt="logo">
                         <h4 class="mt-1 mb-5 pb-1">Register</h4>
                       </div>
-                      <form>
+                      <form action="{{ route('register.post') }}" method="POST">
+                        @csrf
+
                         <p>Create your account</p>
                         <div class="form-outline mb-4">
-                          <input type="email" id="register-username" class="form-control"
+                          <input type="text" id="register-name" class="form-control"
+                            placeholder="Please enter your name.." name="name" />
+                          <label class="form-label text-muted" for="register-name">Full name</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                          <input type="text" id="register-username" class="form-control"
                             placeholder="Please enter a username.." name="username" />
                           <label class="form-label text-muted" for="register-username">Username</label>
                         </div>
@@ -33,7 +41,7 @@
                         </div>
       
                         <div class="text-center pt-1 mb-5 pb-1 d-flex flex-column">
-                          <button class="btn btn-primary btn-block fa-lg mb-3" type="button">Create Account</button>
+                          <button class="btn btn-primary btn-block fa-lg mb-3" type="submit">Create Account</button>
                         </div>
       
                         <div class="d-flex align-items-center justify-content-center pb-4">

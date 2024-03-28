@@ -16,7 +16,9 @@
                         <h4 class="mt-1 mb-5 pb-1">Login</h4>
                       </div>
       
-                      <form>
+                      <form action="{{ route('login.post') }}" method="post">
+                        @csrf
+
                         <p class="text-center">Please login to your account</p>
       
                         <div class="form-outline mb-4">

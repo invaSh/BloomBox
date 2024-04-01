@@ -23,7 +23,6 @@
 
         .navbar {
             background-image: linear-gradient(to bottom left, #413555, #262130, #19180D);
-            ;
 
         }
 

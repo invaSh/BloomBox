@@ -63,15 +63,12 @@ class AccountController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ];
-        
+
 
         $user = User::create($data);
 
-        $userRole = Role_User::create([
-            'role_id' => '2',
-            'users_id' => $user->id
-        ]); 
 
         return redirect(route('login'))->with("success", "Registration successful! Please log in!");
     }

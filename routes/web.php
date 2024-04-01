@@ -21,6 +21,11 @@ Route::post('/login', [AccountController::Class,'postLogin'])->name('login.post'
 
 Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
+
+Route::get('/admin', function(){
+    return view('dashboard');
+});
+
 Route::get('/occasions', function (){
     return view('occasion');
 });

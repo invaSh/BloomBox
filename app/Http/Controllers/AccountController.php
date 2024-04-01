@@ -2,58 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role_User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AccountController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view('login');
-    } 
+    }
 
-    public function postLogin(Request $request){
+    public function postLogin(Request $request)
+    {
         $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if(Auth::attempt($credentials)){
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            Alert::success('Login successful, welcome!');
             return redirect()->intended(route('home'))->with("success", "Login successful!");
         }
-
         return redirect(route('login'))->with("error", "Login details are not valid!");
     }
-    
-    public function register(){
+
+    public function register()
+    {
         return view('register');
     }
 
-    public function registerPost(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required|email|unique:users',
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+    public function registerPost(Request $request)
+    {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ];
 
-        $data ['name'] = $request->name;
-        $data ['username'] = $request->username;
-        $data ['email'] = $request->email;
-        $data ['password'] = Hash::make($request->password);
+        $validator = Validator::make($request->all(), $rules);
 
-        dd($request->all());
+        if ($validator->fails()) {
+
+            $customErrors = [];
+
+            if (!empty($customErrors)) {
+                return back()->withErrors($customErrors)->withInput();
+            } else {
+                return back()->with('error', 'Please ensure all required fields are filled out correctly.')->withInput();
+            }
+        }
+
+        $data = [
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+        
 
         $user = User::create($data);
 
-        if(!$user){
-            return redirect(route('register'))->with("error", "There was an error creating your account. Please check your credentials!");
-        }
+        $userRole = Role_User::create([
+            'role_id' => '2',
+            'users_id' => $user->id
+        ]); 
 
-        return redirect(route('login'))->with("success", "Registration successful!");
-
+        return redirect(route('login'))->with("success", "Registration successful! Please log in!");
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/')->with('success', 'You have been logged out!');
+    }
+
 }

@@ -22,8 +22,9 @@
         }
 
         .navbar {
-            background-image: linear-gradient(to bottom left, #413555, #262130, #19180D);;
-            
+            background-image: linear-gradient(to bottom left, #413555, #262130, #19180D);
+            ;
+
         }
 
         .navbar .nav-link {
@@ -31,7 +32,7 @@
             border-radius: 30px;
         }
 
-        .box{
+        .box {
             width: 47px !important;
             background: #F9E1B5;
             border-radius: 30px;
@@ -43,7 +44,7 @@
             justify-content: flex-end;
         }
 
-        .box input{
+        .box input {
             width: 0;
             outline: none;
             border: none;
@@ -52,60 +53,63 @@
             background: transparent;
         }
 
-        .box:hover input, .box:hover{
+        .box:hover input,
+        .box:hover {
             width: 300px !important;
         }
 
-        .box:hover{
+        .box:hover {
             justify-content: flex-end;
         }
 
-        .box a i{
-            color:#270c52 !important;
+        .box a i {
+            color: #270c52 !important;
             font-size: 18px;
             padding-right: 5px;
         }
-        
-        .customUl{
+
+        .customUl {
             margin-right: 10px !important;
-            padding-right: 
+            padding-right:
         }
 
-        .dropdown-menu{
+        .dropdown-menu {
             background-color: #F9E1B5 !important;
         }
 
-        .dropdown-item{
+        .dropdown-item {
             transition: 0.1s;
         }
 
-        .dropdown-item:hover{
+        .dropdown-item:hover {
             border-radius: 30px !important;
         }
 
-        footer{
+        footer {
             background-image: linear-gradient(to bottom left, #413555, #262130, #19180D);
         }
-        
-        .link-light{
-            color:#F9E1B5 !important;
+
+        .link-light {
+            color: #F9E1B5 !important;
         }
 
-        .iconHover{
+        .iconHover {
             border-radius: 50px;
             height: 32px;
             width: 32px;
             color: #F9E1B5 !important;
         }
-        .specialHover{
+
+        .specialHover {
             border-radius: 30px;
         }
 
-        .iconHover:hover, .specialHover:hover, .navbar .nav-link:hover{
+        .iconHover:hover,
+        .specialHover:hover,
+        .navbar .nav-link:hover {
             background-color: #F9E1B5;
-            color:#413555 !important;
+            color: #413555 !important;
         }
-
     </style>
 
 </head>
@@ -125,11 +129,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0  ms-auto d-flex justify-content-end customUl">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{url('/shop-all')}}">Shop All</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url('/shop-all') }}">Shop All</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="{{url('/occasions')}}" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="{{ url('/occasions') }}" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Occasions
                             </a>
                             <ul class="dropdown-menu">
@@ -162,7 +166,7 @@
                             <a class="nav-link active" aria-current="page" href="{{ url('/about-us') }}">About us</a>
                         </li>
 
-                        
+
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
                                 |
@@ -179,12 +183,37 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active specialHover" aria-current="page" href="/login">
-                                Login/Register
+                            <a class="nav-link active" aria-current="page" href="#">
+                                |
                             </a>
                         </li>
+                        @guest
+                            <li class="nav-item">
+
+                                <a class="nav-link active specialHover" aria-current="page" href="/login">
+                                    Login/Register
+                                </a>
+                            </li>
+                        @endguest
+
+                        @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ auth()->user()->username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Your Profile</a></li>
+                              <li><a class="dropdown-item" href="#">Orders</a></li>
+                              <hr style="margin: 10px;">  
+                              <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <li><button class="dropdown-item" type="submit">Log out<i class="bi bi-door-open mx-1"></i></button></li>
+                            </form>
+                            </ul>
+                          </li>
+                        @endauth
                     </ul>
-                    <form class="d-flex box" role="search">
+                    <form class="d-flex box mx-3" role="search">
                         <input type="text" placeholder="Search...">
                         <a href="#">
                             <i class="bi bi-search logoI"></i>

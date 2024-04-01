@@ -1,6 +1,4 @@
 <x-layout>
-
-
     <section>
         <x-home-header></x-home-header>
     </section>

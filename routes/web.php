@@ -17,7 +17,9 @@ Route::post('/register', [AccountController::class, 'registerPost'])->name('regi
 
 Route::get('/login', [AccountController::Class,'login'])->name('login');
 
-Route::post('/login', [AccountController::Class,'loginPost'])->name('login.post');
+Route::post('/login', [AccountController::Class,'postLogin'])->name('login.post');
+
+Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
 Route::get('/occasions', function (){
     return view('occasion');

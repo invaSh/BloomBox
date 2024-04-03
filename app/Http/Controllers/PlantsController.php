@@ -11,7 +11,7 @@ class PlantsController extends Controller
     public function getAll()
     {
         $plants = Plant::all();
-        return view('plant')->with('allPlants', $plants);
+        return view('User/plant')->with('allPlants', $plants);
                                 //key-allPlants(dergohet ne view)-> perdoret si slot name/prop name
                                 //value-$plants(dergohet ne view)
     }

@@ -24,17 +24,35 @@ class ProductController extends Controller
     }
 
     
-
-    
     public function create()
     {
-        //
+        return view('product-create');
     }
 
+    /**Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->decimal('price', 8,2);
+            $table->integer('quantity');
+            $table->string('imgUrl');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')
+                  ->references('id')
+                  ->on('categories')
+                  ->onDelete('cascade');
+            $table */
    
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=> 'required',
+            'description'=>'required',
+            'price'=>'required',
+            'quantity'=>'required',
+            'imgUrl'=>'required',
+            'category_id'=>'required',
+        ]);
     }
 
    

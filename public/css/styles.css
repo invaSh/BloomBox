@@ -14,6 +14,7 @@
     background-color: #413555 !important;
     color: #f5ecda !important;
     border-color: transparent;
+	transition: .2s;
 }
 
 .btn-primary:hover, .btn-outline-light{
@@ -45,6 +46,10 @@
 
 .text-dark{
     color:#413555 !important;
+}
+
+.text-light{
+	color: #f5ecda !important;
 }
 
 .bg-secondary{
@@ -146,15 +151,48 @@
 	outline: none;
 }
 
+.main-container{
+	background-image: url('../img/form1.png');
+	background-position: center; /* Centers the image in the container */
+	background-repeat: no-repeat; /* Prevents the image from repeating */
+	background-size: cover;
+	height: 700px;
+	position: relative;
+	border-radius: 30px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	margin: 0 auto;
+}
+
+#contactForm{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #f5ecda;
+	margin-top: 400px;
+}
+
+.form-group, input{
+	font-size: 13px;
+	margin-bottom: 3px;
+}
+
+
+.row-custom{
+	width: 80%;
+	text-align: center;
+	display: flex;
+}
+
+.list-custom img{
+	height: 200px;
+	width: auto;
+}
+
 .gradient-custom-2 {
-    /* fallback for old browsers */
     background: #fccb90;
     
     
-    /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(to bottom left, #413555, #262130, #19180D);
     
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to bottom left, #413555, #262130, #19180D);
     }
     

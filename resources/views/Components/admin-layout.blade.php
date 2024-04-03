@@ -50,12 +50,65 @@
           .nav-link i{
             margin: 0 10px;
           }
+
+          .custom-container {
+            max-width: 600px;
+            background: #f5ecda;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 50px auto; 
+        }
+
+        .custom-form-label {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .custom-form-control {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .custom-form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+        .custom-btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .custom-btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .custom-text-danger {
+            color: #dc3545;
+        }
+
+        .custom-d-flex {
+            display: flex;
+            justify-content: center;
+        }
+
+        .custom-fs-5 {
+            font-size: 1.25rem;
+        }
           
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
         }
+
+        
         </style>
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 </head>
@@ -158,7 +211,6 @@
               </ul>
             </li>
             
-            <!-- Users List -->
             <li>
               <a href="#usersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle">
                 <i class="bi bi-people" width="16" height="16"></i>
@@ -176,8 +228,8 @@
                 Categories
               </a>
               <ul class="collapse list-unstyled" id="categoriesSubmenu">
-                <li><a href="#" class="nav-link"><i class="bi bi-arrow-right"width="16" height="16"></i>View all categories</a></li>
-                <li><a href="#" class="nav-link"><i class="bi bi-arrow-right"width="16" height="16"></i>Create new category</a></li>
+                <li><a href="{{url('/admin/category/list')}}" class="nav-link"><i class="bi bi-arrow-right"width="16" height="16"></i>View all categories</a></li>
+                <li><a href="{{url('/admin/category/create')}}" class="nav-link"><i class="bi bi-arrow-right"width="16" height="16"></i>Create new category</a></li>
               </ul>
             </li>
           </ul>
@@ -197,7 +249,7 @@
           </div>
         </div>
 
-        <div class="col-lg-9 offset-lg-2 offset-m-2 offset-sm-2">
+        <div class="col-lg-9 offset-lg-2 d-flex flex-column align-items-center justify-content-center">
           {{ $slot }}
         </div>
 
@@ -208,6 +260,13 @@
     <script src="{{asset("js/bootstrap.bundle.min.js")}}"></script>
 
     <script src="{{asset("js/sidebars.js")}}"></script>
+
+    <script>
+      function deleteCategory(route) {
+          document.getElementById('deleteForm').action = route;
+          $('#confirmDeleteModal').modal('show');
+      }
+  </script>
     
 </body>
 </html>

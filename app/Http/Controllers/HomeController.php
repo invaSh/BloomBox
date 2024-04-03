@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $products = Product::inRandomOrder()->take(3)->get();
 
-        return view('home')->with('products', $products);
+        return view('User/home')->with('products', $products);
                                 //key-products(dergohet ne view)-> perdoret si slot name/prop name
                                 //value-$products(dergohet ne view)
 

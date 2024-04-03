@@ -21,11 +21,25 @@ Route::post('/login', [AccountController::Class,'postLogin'])->name('login.post'
 
 Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
+//Admin v
 
 Route::get('/admin', function(){
-    return view('dashboard');
+    return view('Admin/dashboard');
 });
 
+Route::get('/admin/category/list', [CategoryController::class,'index'])->name('category.list');
+
+Route::get('/admin/category/create', [CategoryController::class,'create'])->name('category.create');
+
+Route::post('/admin/category/create', [CategoryController::class,'store'])->name('category.store');
+
+Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+
+Route::post('/admin/category/edit/{id}', [CategoryController::class,'update'])->name('category.update');
+
+Route::post('/admin/category/{id}', [CategoryController::class,'destroy'])->name('category.destroy');
+
+//Admin ^
 Route::get('/occasions', function (){
     return view('occasion');
 });
@@ -39,7 +53,7 @@ Route::get('/flowers', function (){
 });
 
 Route::get('/about-us', function (){
-    return view('about-us');
+    return view('User/about-us');
 });
 
 

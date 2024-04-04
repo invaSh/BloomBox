@@ -3,15 +3,11 @@
         <div class="row">
             <div class="main-container col-lg-9 col-m-12">
                 <form method="POST" id="contactForm" name="contactForm"
-                    class="contactForm custom-form-container d-flex flex-column align-items-center" action="{{route('category.edit', $category->id)}}">
+                    class="contactForm custom-form-container d-flex flex-column align-items-center"
+                    action="{{ route('category.edit', $category->id) }}">
                     @csrf
-                    @if (session('error'))
-                        <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    <h5>Add a new Category</h5>
+
+                    <h5>Edit Category</h5>
                     <div class="row row-custom">
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
@@ -38,5 +34,11 @@
                 </form>
             </div>
         </div>
+        @if (session('error'))
+            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
     </div>
 </x-admin-layout>

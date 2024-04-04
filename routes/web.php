@@ -39,6 +39,20 @@ Route::post('/admin/category/edit/{id}', [CategoryController::class,'update'])->
 
 Route::post('/admin/category/{id}', [CategoryController::class,'destroy'])->name('category.destroy');
 
+Route::get('/admin/occasion/create', [OccasionController::class, 'create'])->name('occasion.create');
+
+Route::post('/admin/occasion/create', [OccasionController::class, 'store'])->name('occasion.store');
+
+Route::get('/admin/occasion/list', [OccasionController::class, 'index'])->name('occasion.list');
+
+Route::get('/admin/product/create', [ProductController::class, 'create'])->name('product.create');
+
+Route::get('/admin/occasion/edit/{id}', [OccasionController::class, 'edit'])->name('occasion.edit');
+
+Route::post('/admin/occasion/edit/{id}', [OccasionController::class, 'update'])->name('occasion.update');
+
+Route::post('/admin/occasion/{id}', [OccasionController::class, 'destroy'])->name('occasion.destroy');
+
 //Admin ^
 Route::get('/occasions', function (){
     return view('occasion');

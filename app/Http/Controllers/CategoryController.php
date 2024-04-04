@@ -58,8 +58,7 @@ class CategoryController extends Controller
 
         $category = Category::findOrFail($id);
 
-        $category->name = $requestData['name'];
-        $category->description = $requestData['description'];
+        $category->update($requestData);
 
         if (!$category->save()) {
             return redirect()->route('category.edit', $id)->withErrors(['error' => 'There was an error updating the category!']);
@@ -73,7 +72,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
-        $category->delete();
+
+        if(!$category->delete()) {
+            return redirect()->route('category.list')->withErrors(['error' => 'There was an error deleting the category!']);
+        }
+
         return redirect('/admin/category/list')->with('success', 'Category successfully deleted.');    
     }
 }

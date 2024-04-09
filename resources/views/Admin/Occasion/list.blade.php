@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row list-custom d-flex flex-column align-items-center">
             <img src="{{ asset('img/sdsdf.webp') }}" class="img img-fluid" alt="">
             @if (session('success'))
@@ -9,7 +9,7 @@
                 </div>
             @endif
             <table class="table text-center">
-                <thead>
+                <thead class="">
                     <th class="bg-primary text-light">#</th>
                     <th class="bg-primary text-light">ID</th>
                     <th class="bg-primary text-light">Name</th>

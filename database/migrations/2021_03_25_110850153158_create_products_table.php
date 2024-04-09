@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 8,2);
             $table->integer('quantity');
-            $table->string('imgUrl');
+            $table->string('imgUrl')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
                   ->references('id')

@@ -45,13 +45,25 @@ Route::post('/admin/occasion/create', [OccasionController::class, 'store'])->nam
 
 Route::get('/admin/occasion/list', [OccasionController::class, 'index'])->name('occasion.list');
 
-Route::get('/admin/product/create', [ProductController::class, 'create'])->name('product.create');
-
 Route::get('/admin/occasion/edit/{id}', [OccasionController::class, 'edit'])->name('occasion.edit');
 
 Route::post('/admin/occasion/edit/{id}', [OccasionController::class, 'update'])->name('occasion.update');
 
 Route::post('/admin/occasion/{id}', [OccasionController::class, 'destroy'])->name('occasion.destroy');
+
+Route::get('/admin/product/create', [ProductController::class, 'create'])->name('product.create');
+
+Route::post('/admin/product/create', [ProductController::class, 'store'])->name('product.store')->middleware('web');
+
+Route::get('/admin/product/list', [ProductController::class, 'index'])->name('product.list');
+
+Route::post('/admin/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+
+Route::post('/admin/product/edit/{id}', [ProductController::class, 'update'])->name('product.update');
+
+Route::get('/admin/product/details/{id}', [ProductController::class, 'show'])->name('product.show');
 
 //Admin ^
 Route::get('/occasions', function (){

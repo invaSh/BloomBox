@@ -28,6 +28,6 @@ class Product extends Model
 
     public function productOccasions()
     {
-        return $this->belongsToMany(Product_Occasion::class, 'product_occasions');
+        return $this->belongsToMany(Occasion::class, 'product__occasions');
     }
 }

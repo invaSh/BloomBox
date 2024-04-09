@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row list-custom d-flex flex-column align-items-center">
             <img src="{{ asset('img/form2.png') }}" class="img img-fluid" alt="">
             @if (session('success'))

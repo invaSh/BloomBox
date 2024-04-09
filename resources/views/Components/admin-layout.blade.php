@@ -15,6 +15,11 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.10/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+
     <style>
         html {
             height: 100%;
@@ -62,6 +67,10 @@
             margin: 50px auto;
         }
 
+        table {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+
         .custom-form-label {
             color: #333;
             margin-bottom: 8px;
@@ -102,6 +111,18 @@
 
         .custom-fs-5 {
             font-size: 1.25rem;
+        }
+
+        .drop-custom .dropdown-toggle::after {
+            display: none;
+        }
+
+        .drop-custom .dropdown-toggle {
+            background: transparent;
+            color: #000;
+            /* Adjust color as needed */
+            border: none;
+            /* Removes border */
         }
 
         @media (min-width: 768px) {
@@ -233,8 +254,8 @@
                             <li><a href="{{ url('/admin/product/create') }}" class="nav-link"><i
                                         class="bi bi-arrow-right"width="16" height="16"></i>Add new product</a>
                             </li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-arrow-right"width="16"
-                                        height="16"></i>View itinerary</a></li>
+                            <li><a href="{{ url('/admin/product/list') }}" class="nav-link"><i
+                                        class="bi bi-arrow-right"width="16" height="16"></i>View itinerary</a></li>
                         </ul>
                     </li>
 
@@ -320,7 +341,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    
+
 </body>
 
 </html>

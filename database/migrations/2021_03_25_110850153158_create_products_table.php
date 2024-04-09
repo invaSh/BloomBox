@@ -27,6 +27,7 @@ return new class extends Migration
                   ->onDelete('cascade');
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE products AUTO_INCREMENT = 54791;");
     }
 
     /**

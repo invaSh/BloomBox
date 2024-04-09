@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE categories AUTO_INCREMENT = 64791;");
     }
 
     /**

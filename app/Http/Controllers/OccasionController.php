@@ -10,8 +10,9 @@ class OccasionController extends Controller
     public function index()
     {
         $occasions = Occasion::all();
+        $noOccasions = Occasion::count();
 
-        return view("admin/occasion/list", compact("occasions"));
+        return view("admin/occasion/list", compact("occasions", "noOccasions"));
     }
 
     public function create()

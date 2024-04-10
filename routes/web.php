@@ -65,6 +65,19 @@ Route::post('/admin/product/edit/{id}', [ProductController::class, 'update'])->n
 
 Route::get('/admin/product/details/{id}', [ProductController::class, 'show'])->name('product.show');
 
+Route::get('/admin/users/list', [UserController::class, 'index'])->name('users.list');
+
+Route::get('/admin/users/create', [UserController::class, 'create'])->name('users.create');
+
+Route::post('/admin/users/create', [UserController::class, 'store'])->name('users.store');
+
+Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+
+Route::post('/admin/users/edit/{id}', [UserController::class, 'update'])->name('users.update');
+
+Route::post('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/admin/users/details/{id}', [UserController::class, 'show'])->name('users.show');
 //Admin ^
 Route::get('/occasions', function (){
     return view('occasion');

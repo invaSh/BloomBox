@@ -10,8 +10,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+        $noCategories = Category::count();
 
-        return view("admin/category/list", compact("categories"));
+        return view("admin/category/list", compact("categories", "noCategories"));
     }
 
     public function create()

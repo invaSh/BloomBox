@@ -33,7 +33,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('/admin/product/list', compact('products'));
+        $noProducts =  Product::count();
+        return view('/admin/product/list', compact('products', 'noProducts'));
     }
 
     public function create()
@@ -68,7 +69,6 @@ class ProductController extends Controller
 
         if ($request->hasFile('imgUrl')) {
             $fileName = $request->file('imgUrl')->store('product-img', 'public');
-
         }
 
         $product = new Product();

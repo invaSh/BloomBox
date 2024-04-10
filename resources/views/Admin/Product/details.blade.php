@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="project-info-box">
-                    <p><b class="px-3">ID:</b> {{ $product->id }}</p>
+                    <p><b class="px-3">ID:</b> #{{ $product->id }}</p>
                     <hr>
                     <p><b class="px-3">Name:</b>{{ $product->name }}</p>
                     <hr>
@@ -20,10 +20,14 @@
                     <hr>
                     <p><b class="px-3">Occasions:</b>
                         @foreach ($selectedOccasions as $occasion)
-                            <span
-                                class="btn btn-outline-light text-dark p-1 px-2 rounded-3">{{ $occasion->name }}</span>
+                        <span
+                        class="btn btn-outline-light text-dark p-1 px-2 rounded-3">{{ $occasion->name }}</span>
                         @endforeach
                     </p>
+                    <hr>
+                    <p><b class="px-3">Created:</b>{{ $category->created_at }}</p>
+                    <hr>
+                    <p><b class="px-3">Last updated:</b>{{ $category->updated_at }}</p>
 
                 </div>
 

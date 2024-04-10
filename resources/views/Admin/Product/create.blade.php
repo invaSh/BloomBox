@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-md-12 text-center mt-5 addProductBtn">
                             <div class="form-group" id="form-group-custom">
-                                <button type="submit" value="" class="btn btn-primary custom-form-submit">Add
+                                <button type="submit" class="btn btn-primary custom-form-submit">Add
                                     product</button>
                                 <div class="submitting"></div>
                             </div>

@@ -19,6 +19,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.10/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
+        integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+        integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 
     <style>
         html {
@@ -266,10 +274,11 @@
                             Users
                         </a>
                         <ul class="collapse list-unstyled" id="usersSubmenu">
-                            <li><a href="#" class="nav-link"><i class="bi bi-arrow-right"width="16"
-                                        height="16"></i>View all users</a></li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-arrow-right"width="16"
-                                        height="16"></i>Create new user</a></li>
+                            <li><a href="{{ route('users.list') }}" class="nav-link"><i
+                                        class="bi bi-arrow-right"width="16" height="16"></i>View all users</a></li>
+                            <li><a href="{{ route('users.create') }}" class="nav-link"><i
+                                        class="bi bi-arrow-right"width="16" height="16"></i>Create new user</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -341,6 +350,37 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('user-form');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('pass_confirm');
+            const warning = document.getElementById('pass_warning');
+
+            form.addEventListener('submit', (e) => {
+                if (password.value !== confirmPassword.value) {
+                    e.preventDefault();
+                    warning.innerHTML = "Passwords don't match!";
+                } else {
+                    warning.innerHTML = "";
+                }
+            });
+        });
+    </script>
+   <script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('user-picture');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+
+        // Display the file name
+        var fileNameElement = document.getElementById('file-name');
+        fileNameElement.textContent = event.target.files[0].name;
+    }
+</script>
 
 </body>
 

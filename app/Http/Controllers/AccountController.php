@@ -14,7 +14,7 @@ class AccountController extends Controller
 {
     public function login()
     {
-        return view('User/login');
+        return view('/user/login');
     }
 
     public function postLogin(Request $request)
@@ -28,7 +28,7 @@ class AccountController extends Controller
             Alert::success('Login successful, welcome!');
             return redirect()->intended(route('home'))->with("success", "Login successful!");
         }
-        return redirect(route('User/login'))->with("error", "Login details are not valid!");
+        return redirect(route('login'))->with("error", "Login details are not valid!");
     }
 
     public function register()
@@ -70,7 +70,7 @@ class AccountController extends Controller
         $user = User::create($data);
 
 
-        return redirect(route('User/login'))->with("success", "Registration successful! Please log in!");
+        return redirect(route('login'))->with("success", "Registration successful! Please log in!");
     }
 
     public function logout()

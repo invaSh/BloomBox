@@ -197,8 +197,6 @@ input {
 .productCreate{
 	border-radius: 30px;
 	position: relative;
-	background-color: #eae1d0;
-    background-image: linear-gradient(to bottom left, #B67B5B, #DABC96, #874844b2);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -306,7 +304,6 @@ tbody, td, tfoot, h1, thead, tr{
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     width: 900px;
     margin: 100px 0;
-    background-image: linear-gradient(to bottom left, #FAC99B, #F2E9D2, #E9E2D3);
 
 }
 

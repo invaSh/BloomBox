@@ -1,5 +1,5 @@
 <x-admin-layout>
-    @if(session('error'))
+    @if (session('error'))
         <div class="alert alert-danger text-center alert-dismissible fade show mb-1 mt-5" role="alert">
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -64,9 +64,9 @@
                                 <select name="category" id="" class="form-control custom-form-input">
                                     <option value="" selected disabled>--Choose a category</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }} </option>
+                                        <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

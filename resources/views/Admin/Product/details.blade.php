@@ -21,7 +21,7 @@
                     <p><b class="px-3">Occasions:</b>
                         @foreach ($selectedOccasions as $occasion)
                         <span
-                        class="btn btn-outline-light text-dark p-1 px-2 rounded-3">{{ $occasion->name }}</span>
+                        class="btn btn-outline-light text-dark p-1 px-2  my-2 rounded-3">{{ $occasion->name }}</span>
                         @endforeach
                     </p>
                     <hr>

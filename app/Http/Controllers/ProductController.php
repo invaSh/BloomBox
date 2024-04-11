@@ -146,8 +146,11 @@ class ProductController extends Controller
             $fileName = $request->file('imgUrl')->store('product-img', 'public');
             $product->imgUrl = $fileName;
         }
+        $product->category_id = $request->input('category');
+
+        $product->productOccasions()->sync($request->input('occasion', []));
     
-        $product->update($request->except('imgUrl'));
+        $product->update($request->except(['imgUrl', 'category', 'occasion_ids']));
     
         if ($product->save()) {
             return redirect('/admin/product/list')->with('success', 'Product updated successfully!');

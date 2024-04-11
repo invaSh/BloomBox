@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use \Carbon\Carbon;
+
 
 class ProductSeeder extends Seeder
 {
@@ -16,8 +18,9 @@ class ProductSeeder extends Seeder
                 'price' => 39.99,
                 'quantity' => 50,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 13, // Roses
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'White Lily Arrangement',
@@ -25,8 +28,9 @@ class ProductSeeder extends Seeder
                 'price' => 49.99,
                 'quantity' => 30,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 10, // Lilies
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Mixed Tulip Bouquet',
@@ -34,17 +38,9 @@ class ProductSeeder extends Seeder
                 'price' => 29.99,
                 'quantity' => 40,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Mixed Tulip Bouquet',
-                'description' => 'A colorful bouquet of mixed tulips to brighten any occasion.',
-                'price' => 29.99,
-                'quantity' => 40,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 17, // Tulips
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Sunflower Delight',
@@ -52,184 +48,221 @@ class ProductSeeder extends Seeder
                 'price' => 34.99,
                 'quantity' => 25,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
+                'category_id' => 15, // Sunflowers
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],[
                 'name' => 'Orchid Bliss',
                 'description' => 'An exotic and elegant potted orchid that adds sophistication to any space.',
                 'price' => 59.99,
                 'quantity' => 20,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 2, // Cymbidium Orchid
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Spring Medley',
-                'description' => 'A delightful mix of seasonal flowers that encapsulate the essence of spring.',
-                'price' => 42.99,
-                'quantity' => 35,
+                'name' => 'Ethereal Hyacinth Arrangement',
+                'description' => 'An enchanting arrangement of hyacinths, symbolizing playfulness and a constant presence.',
+                'price' => 45.99,
+                'quantity' => 30,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 6, // Hyacinth
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Garden Basket',
-                'description' => 'A beautiful basket filled with a mix of blooming plants and greenery.',
-                'price' => 64.99,
-                'quantity' => 15,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Exotic Love',
-                'description' => 'A passionate arrangement of exotic flowers perfect for an unforgettable gift.',
-                'price' => 89.99,
-                'quantity' => 10,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Daisy Delight',
-                'description' => 'Cheerful daisies arranged in a vase to bring joy and happiness.',
-                'price' => 25.99,
-                'quantity' => 45,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Romantic Roses',
-                'description' => 'A dozen long-stemmed roses that symbolize love, admiration, and gratitude.',
-                'price' => 79.99,
+                'name' => 'Delicate Delphinium Display',
+                'description' => 'A striking display of delphiniums, offering a touch of serenity and grace to any setting.',
+                'price' => 50.99,
                 'quantity' => 20,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 5, // Delphinium
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Peony Perfection',
-                'description' => 'Lush peonies that represent wealth, prosperity, and honor.',
-                'price' => 70.99,
-                'quantity' => 18,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Autumn Splendor',
-                'description' => 'A warm and inviting bouquet that captures the essence of autumn.',
+                'name' => 'Lush Lilac Bouquet',
+                'description' => 'A fragrant bouquet of lilacs, evoking the sweet memories of early summer.',
                 'price' => 55.99,
                 'quantity' => 25,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 9, // Lilac
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Succulent Garden',
-                'description' => 'A diverse mix of hardy succulents that make for a perfect, low-maintenance gift.',
-                'price' => 45.99,
-                'quantity' => 50,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Carnation Cascade',
-                'description' => 'A lush cascade of colorful carnations, symbolizing fascination and distinction.',
-                'price' => 30.99,
-                'quantity' => 40,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Elegant Iris',
-                'description' => 'An elegant bouquet of irises, conveying messages of faith, hope, and wisdom.',
-                'price' => 35.99,
-                'quantity' => 25,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Tropical Paradise',
-                'description' => 'Bring the allure of a tropical paradise into your home with this vibrant and exotic arrangement.',
-                'price' => 75.99,
+                'name' => 'Tropical Bliss Arrangement',
+                'description' => 'An exotic arrangement that transports you to a tropical paradise with every glance.',
+                'price' => 65.99,
                 'quantity' => 15,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 16, // Tropical
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Fragrant Lavender Pot',
-                'description' => 'A pot of blooming lavender, known for its calming and soothing fragrance.',
-                'price' => 22.99,
-                'quantity' => 30,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Herb Garden Kit',
-                'description' => 'Start your own herb garden with this kit, featuring basil, mint, cilantro, and more.',
-                'price' => 49.99,
-                'quantity' => 20,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Rainbow Rose Bouquet',
-                'description' => 'A stunning bouquet of roses dyed in the colors of the rainbow, symbolizing happiness and joy.',
-                'price' => 65.99,
-                'quantity' => 25,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Bonsai Tree',
-                'description' => 'A meticulously cultivated bonsai tree that embodies harmony and balance.',
-                'price' => 120.99,
-                'quantity' => 10,
-                'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Zen Succulent Arrangement',
-                'description' => 'A serene arrangement of succulents, perfect for bringing a sense of calm and mindfulness.',
-                'price' => 28.99,
+                'name' => 'Freesia Fantasy',
+                'description' => 'A dazzling display of freesias, symbolizing thoughtfulness and a spirited joy.',
+                'price' => 40.99,
                 'quantity' => 35,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 18, // Freesia
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Butterfly Garden Seed Kit',
-                'description' => 'Create your own butterfly garden with this seed kit, attracting beautiful butterflies.',
-                'price' => 19.99,
-                'quantity' => 50,
+                'name' => 'Serene Succulent Collection',
+                'description' => 'A carefully curated collection of succulents, symbolizing enduring and timeless love.',
+                'price' => 49.99,
+                'quantity' => 40,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 14, // Succulents
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Hydrangea Heaven',
-                'description' => 'A breathtaking arrangement of hydrangeas in various shades of blue and purple.',
-                'price' => 60.99,
+                'name' => 'Bells of Ireland Bouquet',
+                'description' => 'A captivating bouquet of Bells of Ireland, symbolizing good luck and well wishes.',
+                'price' => 50.99,
                 'quantity' => 20,
                 'imgUrl' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 19, // Bells of Ireland
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
+            [
+                'name' => 'Vibrant Ranunculus Array',
+                'description' => 'An array of colorful ranunculus flowers, bringing a burst of joy to any occasion.',
+                'price' => 42.99,
+                'quantity' => 30,
+                'imgUrl' => '',
+                'category_id' => 12, // Ranunculus
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Dahlia Delight',
+                'description' => 'A stunning arrangement of dahlias, perfect for celebrating bold and beautiful moments.',
+                'price' => 55.99,
+                'quantity' => 20,
+                'imgUrl' => '',
+                'category_id' => 4, // Dahlias
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Soothing Iris Serenade',
+                'description' => 'A serene composition of irises, symbolizing hope, faith, and valor, to calm and inspire.',
+                'price' => 37.99,
+                'quantity' => 25,
+                'imgUrl' => '',
+                'category_id' => 8, // Iris
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],[
+                'name' => 'Calla Elegance',
+                'description' => 'A sleek and modern arrangement of Calla Lilies, symbolizing magnificent beauty.',
+                'price' => 70.00,
+                'quantity' => 20,
+                'imgUrl' => '',
+                'category_id' => 1, // Calla Lilies
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Orchid Oasis',
+                'description' => 'A mesmerizing potted Cymbidium Orchid, offering a long-lasting and sophisticated gesture.',
+                'price' => 80.00,
+                'quantity' => 15,
+                'imgUrl' => '',
+                'category_id' => 2, // Cymbidium Orchid
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Daisy Sunshine',
+                'description' => 'Bright and cheerful Daisies, perfect for spreading happiness and light.',
+                'price' => 25.00,
+                'quantity' => 50,
+                'imgUrl' => '',
+                'category_id' => 3, // Daisies
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Dahlia Drama',
+                'description' => 'A bold and dramatic bouquet of Dahlias, for when you want to make a statement.',
+                'price' => 60.00,
+                'quantity' => 20,
+                'imgUrl' => '',
+                'category_id' => 4, // Dahlias
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Delphinium Dreams',
+                'description' => 'A heavenly arrangement of Delphinium, evoking the depth of the sky and sea.',
+                'price' => 65.00,
+                'quantity' => 18,
+                'imgUrl' => '',
+                'category_id' => 5, // Delphinium
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Hyacinth Harmony',
+                'description' => 'Fragrant Hyacinths arranged to bring peace and harmony to any space.',
+                'price' => 40.00,
+                'quantity' => 30,
+                'imgUrl' => '',
+                'category_id' => 6, // Hyacinth
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Hydrangea Hues',
+                'description' => 'A lush arrangement of Hydrangeas, showcasing a variety of colors and textures.',
+                'price' => 75.00,
+                'quantity' => 25,
+                'imgUrl' => '',
+                'category_id' => 7, // Hydrangeas
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Iris Inspiration',
+                'description' => 'Stunning Irises that inspire creativity and passion, arranged to perfection.',
+                'price' => 50.00,
+                'quantity' => 20,
+                'imgUrl' => '',
+                'category_id' => 8, // Iris
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Lilac Love',
+                'description' => 'A bouquet of fragrant Lilac, embodying the first emotions of love.',
+                'price' => 55.00,
+                'quantity' => 22,
+                'imgUrl' => '',
+                'category_id' => 9, // Lilac
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Lily Luxe',
+                'description' => 'An exquisite arrangement of Lilies, representing purity and refined beauty.',
+                'price' => 70.00,
+                'quantity' => 20,
+                'imgUrl' => '',
+                'category_id' => 10, // Lilies
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
         ];
-
-
 
         DB::table('products')->insert($products);
     }
+
 }

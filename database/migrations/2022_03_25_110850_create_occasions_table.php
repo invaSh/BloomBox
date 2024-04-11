@@ -14,7 +14,6 @@ return new class extends Migration
             $table->text('description');
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE occasions AUTO_INCREMENT = 44791;");
     }
 
     public function down()

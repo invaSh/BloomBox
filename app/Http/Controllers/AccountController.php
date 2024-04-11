@@ -14,6 +14,7 @@ class AccountController extends Controller
 {
     public function login()
     {
+
         return view('/user/login');
     }
 
@@ -23,11 +24,20 @@ class AccountController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+
         $credentials = $request->only('username', 'password');
+
         if (Auth::attempt($credentials)) {
             Alert::success('Login successful, welcome!');
-            return redirect()->intended(route('home'))->with("success", "Login successful!");
+
+            $user = Auth::user();
+            if ($user->role == 'admin' || $user->role == 'employee') {
+                return redirect('/admin')->with("success", "Welcome to the admin dashboard!");
+            } else {
+                return redirect('/')->with("success", "Login successful!");
+            }
         }
+
         return redirect(route('login'))->with("error", "Login details are not valid!");
     }
 

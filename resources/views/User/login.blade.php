@@ -1,6 +1,6 @@
 <x-layout>
   @include('sweetalert::alert');
-    <section class="h-100 gradient-form" style="background-color: #eee;">
+    <section class="h-100 gradient-form">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-10">
@@ -49,8 +49,8 @@
                     </div>
                   </div>
                   <div class="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2">
-                    <img src="{{ asset('img/welcome-nobg.png') }}" class="img-fluid customImg" alt="">
-                  </div>
+                    <img src="{{ asset('img/welcome-nobg.png') }}" class="img-fluid customImg d-none d-lg-block" alt="">
+                </div>
                 </div>
               </div>
             </div>

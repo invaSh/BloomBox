@@ -276,9 +276,17 @@
                         <ul class="collapse list-unstyled" id="usersSubmenu">
                             <li><a href="{{ route('users.list') }}" class="nav-link"><i
                                         class="bi bi-arrow-right"width="16" height="16"></i>View all users</a></li>
-                            <li><a href="{{ route('users.create') }}" class="nav-link"><i
-                                        class="bi bi-arrow-right"width="16" height="16"></i>Create new user</a>
-                            </li>
+
+                            @if (auth()->user()->isAdmin())
+                                <li>
+                                    <a href="{{ route('users.create') }}" class="nav-link">
+                                        <i class="bi bi-arrow-right" width="16" height="16"></i>
+                                        Create new user
+                                    </a>
+                                </li>
+                            @endif
+
+
                         </ul>
                     </li>
 
@@ -318,18 +326,19 @@
                     <a href="#"
                         class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                        <img src="{{ asset('storage/' . auth()->user()->imgUrl) }}" alt="" width="32" height="32"
                             class="rounded-circle me-2">
-                        <strong>mdo</strong>
+                        <strong>{{ auth()->user()->username }}</strong>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary " aria-lbelledby="dropdownUser1">
+                        <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <li><button type="submit" class="dropdown-item text-dark">Sign out</button></li>
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -367,20 +376,20 @@
             });
         });
     </script>
-   <script>
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var output = document.getElementById('user-picture');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('user-picture');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
 
-        // Display the file name
-        var fileNameElement = document.getElementById('file-name');
-        fileNameElement.textContent = event.target.files[0].name;
-    }
-</script>
+            // Display the file name
+            var fileNameElement = document.getElementById('file-name');
+            fileNameElement.textContent = event.target.files[0].name;
+        }
+    </script>
 
 </body>
 

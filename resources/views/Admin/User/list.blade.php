@@ -24,8 +24,11 @@
             <div class="col-md-6">
                 <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
                     <div>
-                        <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="bx bx-plus me-1"></i>
-                            Add New</a>
+                        @if (auth()->user()->isAdmin())
+                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i
+                                    class="bx bx-plus me-1"></i>
+                                Add New</a>
+                        @endif
                     </div>
 
                 </div>
@@ -66,11 +69,13 @@
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('users.show', $user->id) }}">View details</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('users.edit', $user->id) }}">Edit</a></li>
-                                                <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal{{ $user->id }}"
-                                                        href="#">Delete</a></li>
+                                                @if (auth()->user()->isAdmin())
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('users.edit', $user->id) }}">Edit</a></li>
+                                                    <li><a class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteModal{{ $user->id }}"
+                                                            href="#">Delete</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

@@ -46,4 +46,16 @@ class User extends Authenticatable
     public function order(){
         return $this->hasMany(Order::class);
     }
+
+    public function isAdmin() {
+        return $this->role === 'admin';
+    }
+
+    public function isEmployee() {
+        return $this->role === 'employee';
+    }
+
+    public function isUser() {
+        return $this->role === 'user';
+    }
 }

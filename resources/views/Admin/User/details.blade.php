@@ -60,14 +60,16 @@
                     </div>
                 </div>
             </div>
-            <div class="container d-flex justify-content-center mb-0 mt-5">
-                <p>
-                    <a href="{{ route('users.edit', $user->id) }}"
-                        class="btn btn-primary btn-facebook btn-circle btn-icon mr-5 mb-0">Edit</a>
-                    <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}" href="#"
-                        class="btn btn-danger btn-twitter btn-circle btn-icon mr-5 mb-0">Delete</i></a>
-                </p>
-            </div>
+            @if (auth()->user()->isAdmin())
+                <div class="container d-flex justify-content-center mb-0 mt-5">
+                    <p>
+                        <a href="{{ route('users.edit', $user->id) }}"
+                            class="btn btn-primary btn-facebook btn-circle btn-icon mr-5 mb-0">Edit</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}"
+                            class="btn btn-danger btn-twitter btn-circle btn-icon mr-5 mb-0">Delete</i></a>
+                    </p>
+                </div>
+            @endif
             <div class="project-info-box col-12 text-center">
                 <p><b>Orders:</b></p>
                 <hr>

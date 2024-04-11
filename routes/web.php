@@ -88,15 +88,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/shop-all', [ShopAllController::class, 'getAll'])->name('shop-all');
 
+    Route::get('/product/{id}', [HomeController::class,'show'])->name('product.show');
 
     Route::get('/occasions', function () {
         return view('occasion');
     });
 
-    Route::get('/product', function () {
-        return view('product');
-    });
-
+    
     Route::get('/flowers', function () {
         return view('flowers');
     });

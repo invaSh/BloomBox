@@ -12,6 +12,14 @@ footer{
     color: #413555 !important;
 }
 
+.customHover{
+    transition: .2s;
+    cursor: pointer;
+}
+.customHover:hover{
+    transform: scale(1.1);
+}
+
 .btn-primary,
 .btn-outline-light:hover,
 .kartBtn:hover {
@@ -347,6 +355,37 @@ tbody, td, tfoot, h1, thead, tr{
     background: linear-gradient(to bottom left, #413555, #262130, #19180d);
 
     margin-top: 5rem;
+}
+
+.quantityBox{
+    text-align: center;
+    border-radius: 30px;
+    border: 1px solid #cfcfcf79;
+}
+.quantityBox input{
+    width: 19px !important;
+    border: transparent;
+    font-size: 18px;
+}
+
+.quantityBox input:focus{
+    outline: none;
+    border: none;
+}
+
+.quantityBox .fs-2{
+    border-radius: 30px 0 0 30px;
+}
+
+.quantityBox .fs-3{
+    border-radius: 0 30px 30px 0;
+    padding: 0.1rem;
+}
+.quantityBox span{
+    background-color: #cfcfcf79;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
 }
 
 

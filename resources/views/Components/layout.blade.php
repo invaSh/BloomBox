@@ -164,18 +164,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/about-us') }}">About us</a>
                         </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                |
-                            </a>
-                        </li>
-                        <li class="nav-item d-flex">
-                            <a class="nav-link active iconHover" aria-current="page" href="#">
-                                <i class="bi bi-suit-heart"></i>
-                            </a>
-                        </li>
                         <li class="nav-item d-flex">
                             <a class="nav-link active iconHover customPos" aria-current="page"
                                 href="{{ route('cart.index') }}">
@@ -272,18 +260,18 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const productTotals = document.getElementById('product-totals'); 
+                const productTotals = document.getElementById('product-totals');
                 const items = document.querySelectorAll('.quantityBox');
 
                 items.forEach(item => {
                     const increaseButton = item.querySelector('.increase-quantity');
                     const decreaseButton = item.querySelector('.decrease-quantity');
                     const quantityInput = item.querySelector('input[type="num"]');
-                    const id = increaseButton.id.split('-').pop(); 
+                    const id = increaseButton.id.split('-').pop();
 
                     increaseButton.addEventListener('click', () => {
                         quantityInput.value = parseInt(quantityInput.value) + 1;
-                        if (productTotals) { 
+                        if (productTotals) {
                             updateSubtotal();
                         }
                     });
@@ -291,14 +279,14 @@
                     decreaseButton.addEventListener('click', () => {
                         if (quantityInput.value > 1) {
                             quantityInput.value = parseInt(quantityInput.value) - 1;
-                            if (productTotals) { 
+                            if (productTotals) {
                                 updateSubtotal();
                             }
                         }
                     });
                 });
 
-                if (productTotals) { 
+                if (productTotals) {
                     function updateSubtotal() {
                         let total = 0;
                         items.forEach(item => {

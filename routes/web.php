@@ -107,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/about-us', function () {
         return view('User/about-us');
-    });
+    })->name('about-us');
 });
 
 Route::get('/admin/accessdenied', function () {

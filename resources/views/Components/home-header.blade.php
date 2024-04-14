@@ -1,6 +1,8 @@
 <header class="bg-dark py-5 customHeader d-flex flex-column align-items-center">
-    <p class="fw-bold border-bottom">BloomBox Flower-Market, 1342 Abbott Spring, Westport, Montana, 55413, United
-        States </p>
+    <p class="fw-bold col-lg-8 col-xl-7 col-xxl-6 text-center" style="color: #413555c2"><i>BloomBox Flower-Market, 1342
+            Abbott Spring,
+            Westport, Montana, 55413, United
+            States </i></p>
     <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center">
             <div class="col-lg-8 col-xl-7 col-xxl-6">
@@ -11,8 +13,12 @@
                         turn. At BloomBox, we're not just a flower shop – we're a cherished part of your community,
                         dedicated to bringing beauty and joy to your doorstep.</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                        <a class="btn btn-primary btn-lg px-4 me-sm-3 customBtn" href="#features">Get Started</a>
-                        <a class="btn btn-outline-light btn-lg px-4 lrnM" href="#!">Learn More</a>
+                        @if (!Auth::user())
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3 customBtn" href="{{ route('login') }}">Get
+                                Started</a>
+                        @endif
+                        <a class="btn btn-outline-light btn-lg px-4 lrnM" href=" {{ route('about-us') }} ">Learn
+                            More</a>
                     </div>
                 </div>
             </div>

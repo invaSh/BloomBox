@@ -7,7 +7,7 @@
             </div>
         </div>
     @endif
-    <section class="h-100 h-custom">
+    <section class="h-100 h-custom mb-5">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12">
@@ -41,7 +41,7 @@
                                                         {{ $item->name }}
                                                     </div>
                                                     <div class="col-md-2 col-lg-2 col-xl-2">
-                                                        Price per one: {{ $item->price }}
+                                                        Price per one: ${{ $item->price }}
                                                     </div>
                                                     <div class="col-md-2 col-lg-2 col-xl-2">
                                                         <div class="d-flex align-items-center quantityBox"
@@ -61,11 +61,12 @@
                                                         class="col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center">
                                                         @csrf
                                                         <button type="submit"
-                                                            class="p-2 btn btn-outline-light text-center rounded-5"
-                                                            style="text-decoration: none;">Remove<i
+                                                            class="p-2 btn btn-primary text-center rounded-5"
+                                                            style="text-decoration: none; font-size: 14px">Remove<i
                                                                 class="bi bi-trash"></i></button>
                                                     </form>
                                                 </div>
+                                                <hr class="my-4">
                                             @endforeach
                                         @else
                                             <h1 class="text-center text-muted">Shopping cart empty!</h2>

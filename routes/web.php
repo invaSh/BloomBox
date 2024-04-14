@@ -80,15 +80,21 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/admin/users/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
     Route::post('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-
-
+    
+    
 });
 
 Route::middleware(['auth'])->group(function () {
-
+    
     Route::get('/shop-all', [ShopAllController::class, 'getAll'])->name('shop-all');
-
+    
     Route::get('/product/{id}', [HomeController::class,'show'])->name('product.show');
+    
+    Route::get('/cart', [CartController::class,'index'])->name('cart.index');
+
+    Route::post('/user/cart', [CartController::class, 'store'])->name('cart.store');
+
+    Route::post('/cart/{id}', [CartController::class,'destroy'])->name('cart.destroy');
 
     Route::get('/occasions', function () {
         return view('occasion');

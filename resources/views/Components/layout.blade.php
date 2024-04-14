@@ -177,8 +177,23 @@
                             </a>
                         </li>
                         <li class="nav-item d-flex">
-                            <a class="nav-link active iconHover" aria-current="page" href="#">
+                            <a class="nav-link active iconHover customPos" aria-current="page"
+                                href="{{ route('cart.index') }}">
                                 <i class="bi bi-basket"></i>
+                                @if (auth()->check())
+                                    @php
+                                        $userId = auth()->id();
+                                        $cartItemCount = 0;
+                                        $cart = \App\Models\Cart::where('user_id', $userId)->with('products')->first(); // Make sure to eager load 'products'
+                                        if ($cart) {
+                                            $cartItemCount = $cart->products->sum('pivot.quantity');
+                                        }
+                                    @endphp
+                                    @if ($cartItemCount > 0)
+                                        <span class="bg-danger">{{ $cartItemCount }}</span>
+                                    @endif
+                                @endif
+
                             </a>
                         </li>
                         <li class="nav-item">
@@ -196,20 +211,22 @@
                         @endguest
 
                         @auth
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ auth()->user()->username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                              <li><a class="dropdown-item" href="#">Orders</a></li>
-                              <hr style="margin: 10px;">  
-                              <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <li><button class="dropdown-item" type="submit">Log out<i class="bi bi-door-open mx-1"></i></button></li>
-                            </form>
-                            </ul>
-                          </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fw-bold" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ auth()->user()->username }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Your Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Orders</a></li>
+                                    <hr style="margin: 10px;">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <li><button class="dropdown-item" type="submit">Log out<i
+                                                    class="bi bi-door-open mx-1"></i></button></li>
+                                    </form>
+                                </ul>
+                            </li>
                         @endauth
                     </ul>
                     <form class="d-flex box mx-3" role="search">
@@ -252,6 +269,51 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const productTotals = document.getElementById('product-totals'); 
+                const items = document.querySelectorAll('.quantityBox');
+
+                items.forEach(item => {
+                    const increaseButton = item.querySelector('.increase-quantity');
+                    const decreaseButton = item.querySelector('.decrease-quantity');
+                    const quantityInput = item.querySelector('input[type="num"]');
+                    const id = increaseButton.id.split('-').pop(); 
+
+                    increaseButton.addEventListener('click', () => {
+                        quantityInput.value = parseInt(quantityInput.value) + 1;
+                        if (productTotals) { 
+                            updateSubtotal();
+                        }
+                    });
+
+                    decreaseButton.addEventListener('click', () => {
+                        if (quantityInput.value > 1) {
+                            quantityInput.value = parseInt(quantityInput.value) - 1;
+                            if (productTotals) { 
+                                updateSubtotal();
+                            }
+                        }
+                    });
+                });
+
+                if (productTotals) { 
+                    function updateSubtotal() {
+                        let total = 0;
+                        items.forEach(item => {
+                            const price = parseFloat(item.dataset.price);
+                            const quantity = parseInt(item.querySelector('input[type="num"]').value);
+                            total += price * quantity;
+                        });
+                        productTotals.innerText = `$${total.toFixed(2)}`;
+                    }
+                }
+            });
+        </script>
+
+        @yield('scripts')
+
 </body>
 
 </html>

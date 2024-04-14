@@ -1,5 +1,14 @@
 <x-layout>
+
     <section class="py-5 text-dark">
+        @if (session('success'))
+            <div class="container d-flex flex-column align-items-center">
+                <div class="alert alert-success text-center alert-dismissible fade show mb-1 mt-5" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
@@ -12,33 +21,36 @@
                             class="bg-primary text-light text-center py-1 px-3 rounded-3 customHover cursor-pointer">{{ $category->name }}</span>
                     </div>
                     <p class="lead">{{ $product->description }}</p>
-                    <div class="d-flex">
-                        <div class="d-flex quantityBox">
-                            <span class="fs-2">&#65293;</span>
-                            <input class="text-center mx-3" id="inputQuantity" type="num" value="1" />
-                            <span class="fs-3">&#65291;</span>
-                        </div>
-                        </button>
+                    <form action="{{ route('cart.store') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <div class="d-flex">
 
-                    </div>
+                            <div class="d-flex align-items-center quantityBox">
+                                <span class="fs-2 decrease-quantity"
+                                    id="decrease-quantity-{{ $product->id }}">&#65293;</span>
+                                <input class="text-center mx-3" id="inputQuantity-{{ $product->id }}" type="num"
+                                    name="quantity" value="1" />
+                                <span class="fs-3 increase-quantity"
+                                    id="increase-quantity-{{ $product->id }}">&#65291;</span>
+                            </div>
+                            <button class="btn btn-outline-light btn-lg px-4 mx-3" type="submit">
+                                Add to basket
+                                <i class="bi bi-basket"></i>
+                            </button>
+                        </div>
+                    </form>
                     <p class="text-muted col-sm-12 my-2">
                         <i class="bi bi-check-circle-fill"></i>
                         Guaranteed timely delivery to your doorstep, ensuring your order arrives safely and securely.
                     </p>
-                    <div class="row gap-3 mt-3">
-                        <button class="btn btn-outline-light btn-lg px-4 col" type="button">
-                            Add to basket
-                            <i class="bi bi-basket"></i>
-                            <button class="btn btn-primary btn-lg px-4 col" type="button">
-                                Add to wishtlist
-                                <i class="bi bi-suit-heart"></i>
-                            </button>
+                    <div class="row mt-3">
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Related items section-->
     <section class="rown py-5 bg-light">
         <div class="px-4 px-lg-5 mt-5">
             <h2 class="fw-bolder mb-4 text-center">Related products</h2>

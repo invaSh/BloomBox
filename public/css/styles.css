@@ -4,7 +4,7 @@
     font-family: "Syne", sans-serif;
 }
 
-footer{
+footer {
     margin-top: 10rem !important;
 }
 .customHeader {
@@ -12,11 +12,11 @@ footer{
     color: #413555 !important;
 }
 
-.customHover{
-    transition: .2s;
+.customHover {
+    transition: 0.2s;
     cursor: pointer;
 }
-.customHover:hover{
+.customHover:hover {
     transform: scale(1.1);
 }
 
@@ -193,36 +193,35 @@ input {
     display: flex;
 }
 
-.list-custom img, .userListImg{
+.list-custom img,
+.userListImg {
     height: 200px;
     width: auto;
 }
 
-.container-custom{
-	min-width: 500px;
-	margin: 100px 0;
+.container-custom {
+    min-width: 500px;
+    margin: 100px 0;
     max-width: 850px;
-    padding-left: 70px ;
+    padding-left: 70px;
 }
 
-.productCreate{
-	border-radius: 30px;
-	position: relative;
+.productCreate {
+    border-radius: 30px;
+    position: relative;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-	color: #822547;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    color: #822547;
 }
 
-
-fieldset{
-	width: 70%;
-	margin-top: 20px;
-	font-size: 20px;
+fieldset {
+    width: 70%;
+    margin-top: 20px;
+    font-size: 20px;
     position: relative;
 }
-
 
 .addProductBtn button {
     background-color: #822547 !important;
@@ -231,21 +230,21 @@ fieldset{
     font-size: 18px;
 }
 
-fieldset label{
-	font-size: 16px;
-	margin-bottom: 5px;
+fieldset label {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
-#productCreateImg{
-	width: 60%;
-	border-radius: 30px 30px 0 0;
-	padding: 0;
-	top: -245px;
+#productCreateImg {
+    width: 60%;
+    border-radius: 30px 30px 0 0;
+    padding: 0;
+    top: -245px;
     left: 135px;
 }
 input:focus,
 select:focus,
-textarea:focus{
+textarea:focus {
     box-shadow: none !important;
 }
 
@@ -259,77 +258,91 @@ textarea:focus{
 
 .btn:focus {
     background-color: transparent !important;
-    color: #822547!important;
+    color: #822547 !important;
 }
 
-
-.bg-customm{
-    background-image: url('../img/form5.png');
+.bg-customm {
+    background-image: url("../img/form5.png");
     height: 800px;
     width: 500px;
     padding-top: 80px;
 }
 
-.customCont{
+.customCont {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: linear-gradient(to bottom left, #B67B5B, #DABC96, #874844b2);
+    background-image: linear-gradient(
+        to bottom left,
+        #b67b5b,
+        #dabc96,
+        #874844b2
+    );
     margin-top: 230px !important;
     width: 100%;
     border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+        rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-table{
-    border-radius: 30px !important; 
+table {
+    border-radius: 30px !important;
 }
 
-.customTable th{
+.customTable th {
     background-color: #552a4170;
     color: #eae1d0;
 }
 
-tbody, td, tfoot, th, thead, tr{
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
     border-style: none !important;
 }
 
-tbody, td, tfoot, h1, thead, tr{
-    color: #413555 !important;  
+tbody,
+td,
+tfoot,
+h1,
+thead,
+tr {
+    color: #413555 !important;
 }
 
- .customTable td{
+.customTable td {
     background-color: transparent !important;
     color: #2e263b;
     font-size: 18px;
 }
 
-#productListImg{
+#productListImg {
     height: 300px;
     top: -180px;
 }
 
-.customForm{
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+.customForm {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+        rgba(0, 0, 0, 0.22) 0px 10px 10px;
     width: 900px;
     margin: 100px 0;
-
 }
 
-.project-info{
+.project-info {
     padding-top: 100px;
 }
 
-.project-info-box{
+.project-info-box {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 10px;
     padding: 30px;
     margin: 30px;
 }
 
-#detailsImg{
+#detailsImg {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -337,10 +350,9 @@ tbody, td, tfoot, h1, thead, tr{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.customCard{
+.customCard {
     border: transparent;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
 }
 
 .gradient-custom-2 {
@@ -353,82 +365,137 @@ tbody, td, tfoot, h1, thead, tr{
     );
 
     background: linear-gradient(to bottom left, #413555, #262130, #19180d);
-
-    margin-top: 5rem;
 }
 
-.quantityBox{
+.quantityBox {
     text-align: center;
     border-radius: 30px;
     border: 1px solid #cfcfcf79;
+    display: flex;
+    align-items: center;
 }
-.quantityBox input{
+.quantityBox input {
     width: 19px !important;
     border: transparent;
     font-size: 18px;
 }
 
-.quantityBox input:focus{
+.quantityBox input:focus {
     outline: none;
     border: none;
 }
 
-.quantityBox .fs-2{
+.quantityBox .fs-2 {
     border-radius: 30px 0 0 30px;
 }
 
-.quantityBox .fs-3{
+.quantityBox .fs-3 {
     border-radius: 0 30px 30px 0;
     padding: 0.1rem;
 }
-.quantityBox span{
+.quantityBox span {
     background-color: #cfcfcf79;
     height: 100%;
-    width: 100%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.customBorder {
+    border-radius: 0px;
+    border-color: transparent;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.customPos {
+    position: relative;
+}
+
+.customPos span {
+    position: absolute;
+    top: 18px;
+    right: -5px;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 15px;
 }
 
 
-
-.whistle{
-  width: 20%;
-  fill: #f95959;
-  margin: 100px 40%;
-  text-align: left;
-  transform: translate(-50%, -50%);
-  transform: rotate(0);
-  transform-origin: 80% 30%;
-  animation: wiggle .2s infinite;
+.whistle {
+    width: 20%;
+    fill: #f95959;
+    margin: 100px 40%;
+    text-align: left;
+    transform: translate(-50%, -50%);
+    transform: rotate(0);
+    transform-origin: 80% 30%;
+    animation: wiggle 0.2s infinite;
 }
 
 @keyframes wiggle {
-  0%{
-    transform: rotate(3deg);
-  }
-  50%{
-    transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(3deg);
-  }
+    0% {
+        transform: rotate(3deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(3deg);
+    }
 }
-.access-h1{
-  margin-top: -100px;
-  margin-bottom: 20px;
-  color: #facf5a;
-  text-align: center;
-  font-family: 'Raleway';
-  font-size: 90px;
-  font-weight: 800;
+.access-h1 {
+    margin-top: -100px;
+    margin-bottom: 20px;
+    color: #facf5a;
+    text-align: center;
+    font-family: "Raleway";
+    font-size: 90px;
+    font-weight: 800;
 }
-.access-h2{
-  color: #455d7a;
-  text-align: center;
-  font-family: 'Raleway';
-  font-size: 30px;
-  text-transform: uppercase;
+.access-h2 {
+    color: #455d7a;
+    text-align: center;
+    font-family: "Raleway";
+    font-size: 30px;
+    text-transform: uppercase;
 }
 
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+.bg-grey {
+    background-color: #eae8e8;
+}
+
+@media (min-width: 992px) {
+    .card-registration-2 .bg-grey {
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+}
+
+@media (max-width: 991px) {
+    .card-registration-2 .bg-grey {
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+}
 @media (min-width: 768px) {
     .gradient-form {
         height: 100vh !important;

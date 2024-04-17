@@ -69,11 +69,18 @@
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent align-items-center">
                                 <div class="text-center">
-                                    <a class="btn btn-primary mt-auto mb-3"
-                                        href="{{ route('product.show', $product->id) }}">View more</a>
-                                    <a href="#" class="btn kartBtn">
-                                        <i class="bi bi-basket"></i>
-                                    </a>
+                                    <form action="{{ route('cart.store') }}" method="post">
+                                        @csrf
+                                        <a class="btn btn-primary mt-auto mb-3"
+                                            href="{{ route('product.show', $product->id) }}">View more</a>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                        <input id="inputQuantity-{{ $product->id }}" type="num" name="quantity"
+                                            value="1" hidden>
+                                        <button type="submit" class="btn kartBtn">
+                                            <i class="bi bi-basket"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

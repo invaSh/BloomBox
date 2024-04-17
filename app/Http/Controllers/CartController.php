@@ -28,12 +28,6 @@ class CartController extends Controller
 
         return view("/user/cart/cart", compact("products", "cart", "productTotal"));
     }
-
-
-    public function create()
-    {
-        //
-    }
     public function store(Request $request)
     {
         $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
@@ -49,26 +43,9 @@ class CartController extends Controller
 
         return back()->with('success', 'Product added to cart successfully!');
     }
-
-
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function destroy($id)
     {
-        $cart = Cart::where('user_id', Auth::id())->first(); 
+        $cart = Cart::where('user_id', Auth::id())->first();
         if (!$cart) {
             return redirect()->back()->with('error', 'Cart not found.');
         }

@@ -11,7 +11,8 @@
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 @foreach($allProducts as $product)
-                <x-card :image="$product->imageUrl" :name="$product->name" :description="$product->description" :price="$product->price"></x-card>
+                <x-card :image="asset('storage/' . $product->imgUrl)" :name="$product->name" :description="$product->description" :price="$product->price" :id="$product->id">
+                </x-card>
                 @endforeach
             </div>
         </div>

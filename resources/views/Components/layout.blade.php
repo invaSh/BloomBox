@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', '')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -15,8 +16,18 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+        integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         #logo {
             height: 90px !important;
         }
@@ -109,7 +120,13 @@
             background-color: #F9E1B5;
             color: #413555 !important;
         }
+
+        .slot{
+            padding-bottom: 50px;
+        }
     </style>
+
+    @yield('css')
 
 </head>
 
@@ -157,9 +174,6 @@
                                 </li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url('/plants') }}">Plants</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/about-us') }}">About us</a>
@@ -227,80 +241,79 @@
                 </div>
             </div>
         </nav>
+    </main>
 
-
-
+    <main class="slot">
         {{ $slot }}
+    </main>
 
 
-        <footer class="bg-dark py-4">
-            <div class="container px-5">
-                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto">
-                        <div class="link-light small m-0 text-white">Copyright &copy; BloomBox 2024</div>
-                    </div>
-                    <div class="col-auto">
-                        <a class="link-light small" href="#!">Shop All</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Occasions</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Flowers</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Plants</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">About us</a>
-                    </div>
+    <footer class="bg-dark">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="link-light small m-0 text-white">Copyright &copy; BloomBox 2024</div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Shop All</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Occasions</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Flowers</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">About us</a>
                 </div>
             </div>
-        </footer>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+        </div>
+    </footer>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const productTotals = document.getElementById('product-totals');
-                const items = document.querySelectorAll('.quantityBox');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productTotals = document.getElementById('product-totals');
+            const items = document.querySelectorAll('.quantityBox');
 
-                items.forEach(item => {
-                    const increaseButton = item.querySelector('.increase-quantity');
-                    const decreaseButton = item.querySelector('.decrease-quantity');
-                    const quantityInput = item.querySelector('input[type="num"]');
-                    const id = increaseButton.id.split('-').pop();
+            items.forEach(item => {
+                const increaseButton = item.querySelector('.increase-quantity');
+                const decreaseButton = item.querySelector('.decrease-quantity');
+                const quantityInput = item.querySelector('input[type="num"]');
+                const id = increaseButton.id.split('-').pop();
 
-                    increaseButton.addEventListener('click', () => {
-                        quantityInput.value = parseInt(quantityInput.value) + 1;
+                increaseButton.addEventListener('click', () => {
+                    quantityInput.value = parseInt(quantityInput.value) + 1;
+                    if (productTotals) {
+                        updateSubtotal();
+                    }
+                });
+
+                decreaseButton.addEventListener('click', () => {
+                    if (quantityInput.value > 1) {
+                        quantityInput.value = parseInt(quantityInput.value) - 1;
                         if (productTotals) {
                             updateSubtotal();
                         }
-                    });
-
-                    decreaseButton.addEventListener('click', () => {
-                        if (quantityInput.value > 1) {
-                            quantityInput.value = parseInt(quantityInput.value) - 1;
-                            if (productTotals) {
-                                updateSubtotal();
-                            }
-                        }
-                    });
-                });
-
-                if (productTotals) {
-                    function updateSubtotal() {
-                        let total = 0;
-                        items.forEach(item => {
-                            const price = parseFloat(item.dataset.price);
-                            const quantity = parseInt(item.querySelector('input[type="num"]').value);
-                            total += price * quantity;
-                        });
-                        productTotals.innerText = `$${total.toFixed(2)}`;
                     }
-                }
+                });
             });
-        </script>
 
-        @yield('scripts')
+            if (productTotals) {
+                function updateSubtotal() {
+                    let total = 0;
+                    items.forEach(item => {
+                        const price = parseFloat(item.dataset.price);
+                        const quantity = parseInt(item.querySelector('input[type="num"]').value);
+                        total += price * quantity;
+                    });
+                    productTotals.innerText = `$${total.toFixed(2)}`;
+                }
+            }
+        });
+    </script>
+
+    @yield('scripts')
 
 </body>
 

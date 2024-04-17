@@ -76,9 +76,9 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/admin/users/create', [UserController::class, 'store'])->name('users.store');
 
     Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-
+    
     Route::post('/admin/users/edit/{id}', [UserController::class, 'update'])->name('users.update');
-
+    
     Route::post('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     
     
@@ -91,10 +91,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/{id}', [HomeController::class,'show'])->name('product.show');
     
     Route::get('/cart', [CartController::class,'index'])->name('cart.index');
-
+    
     Route::post('/user/cart', [CartController::class, 'store'])->name('cart.store');
-
+    
     Route::post('/cart/{id}', [CartController::class,'destroy'])->name('cart.destroy');
+    
+    Route::get('/order/{id}', [OrderController::class,'create'])->name('order.create');
+    
+    Route::post('/order/store', [OrderController::class,'store'])->name('order.store');
+
+    Route::post('/address/store', [OrderController::class,'storeAddress'])->name('address.store');
+
+    Route::get('/thankyou', [OrderController::class,'thanks'])->name('order.thanku');
+    
+    Route::post('/billing/store', [OrderController::class,'storeBilling'])->name('billing.store');
+
+    Route::post('/card/store', [OrderController::class,'storeCard'])->name('card.store');
 
     Route::get('/occasions', function () {
         return view('occasion');

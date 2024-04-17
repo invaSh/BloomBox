@@ -90,9 +90,10 @@
                                             </h5>
                                         </div>
                                         @if ($products->isNotEmpty())
-                                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                            <input type="hidden" name="quantity" value="{{ $itemsC }}">
+                                            <a href="{{ route('order.create', $cart->id) }}" type="submit" data-mdb-button-init data-mdb-ripple-init
                                                 class="btn btn-outline-light btn-block btn-lg"
-                                                data-mdb-ripple-color="dark">Proceed to checkout</button>
+                                                data-mdb-ripple-color="dark">Proceed to checkout</a>
                                         @endif
                                     </div>
                                 </div>

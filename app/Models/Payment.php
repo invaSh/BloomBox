@@ -10,16 +10,16 @@ class Payment extends Model
     use HasFactory;
 
     protected $table = 'payments';
+    protected $primaryKey = 'transaction_id';
 
     protected $fillable = [
-        'order_id',
+        'user_id',
         'amount',
         'payment_method',
         'status',
         'transaction_id',
-        'card_last_four',
-        'card_type',
-        'notes',
+        'billing_id',
+        'card_id'
     ];
 
     public function order()

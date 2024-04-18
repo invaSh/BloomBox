@@ -32,6 +32,15 @@ class Order extends Model
                     ->withTimestamps();;
     }
 
+    public function getTotalAmount()
+    {
+        $total = 0;
+        foreach ($this->products as $product) {
+            $total += $product->pivot->price;
+        }
+        return $total;
+    }
+
     public function payment()
     {
         return $this->hasOne(Payment::class);

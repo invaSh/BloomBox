@@ -26,4 +26,10 @@ class Payment extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function card()
+    {
+        return $this->belongsTo(Card::class, 'card_id'); 
+    }
+
 }

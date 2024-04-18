@@ -121,7 +121,7 @@
             color: #413555 !important;
         }
 
-        .slot{
+        .slot {
             padding-bottom: 50px;
         }
     </style>
@@ -186,7 +186,7 @@
                                     @php
                                         $userId = auth()->id();
                                         $cartItemCount = 0;
-                                        $cart = \App\Models\Cart::where('user_id', $userId)->with('products')->first(); // Make sure to eager load 'products'
+                                        $cart = \App\Models\Cart::where('user_id', $userId)->with('products')->first();
                                         if ($cart) {
                                             $cartItemCount = $cart->products->sum('pivot.quantity');
                                         }
@@ -220,7 +220,8 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                                    <li><a class="dropdown-item" href="#">Orders</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('order.list', auth()->user()->id) }}">Orders</a></li>
                                     <hr style="margin: 10px;">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
@@ -266,6 +267,9 @@
             </div>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

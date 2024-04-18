@@ -11,11 +11,23 @@ class Card extends Model
 
     protected $table = 'cards';
 
-    protected $fillable = [ 
-        "number", "expiration_date", "cvc","holder","user_id",
+    protected $fillable = [
+        "number",
+        "expiration_date",
+        "cvc",
+        "holder",
+        "user_id",
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
+
+    public function payment()
+    {
+        return $this->hasMany(Card::class, 'card_id');
+    }
+
+
 }

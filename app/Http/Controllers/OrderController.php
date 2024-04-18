@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\User;
 use App\Models\Address;
 use App\Models\Billing;
 use App\Models\Card;
@@ -15,10 +16,25 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        //
+        $user = User::find($id);
+
+        $orders = Order::where("user_id", $id)->with([
+            'products' => function ($query) {
+                $query->withPivot('quantity');
+            }
+        ])->get();
+
+        $orderTotals = [];
+
+        foreach ($orders as $order) {
+            $orderTotals[$order->id] = $order->getTotalAmount();
+        }
+
+        return view('User/Order/list', compact('id', 'orders', 'user', 'orderTotals'));
     }
+
 
     public function create($id)
     {
@@ -167,7 +183,6 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-
     public function store(Request $request)
     {
         // dd([
@@ -280,9 +295,49 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        //
+        $order = Order::with(['products' => function($query) {
+            $query->withPivot('quantity', 'price'); 
+        }])->find($id);
+        $total = $order->getTotalAmount();
+        $products = $order->products()->where("order_id", $id)->get();
+        $address= Address::where("id",  $order->address_id)->first();
+        $payment = Payment::where("transaction_id", $order->payment_id)->first();
+        $billing = Billing::where("id", $payment->billing_id)->first();
+
+        return view('/User/Order/details', compact('order', 'products', 'total', 'address','payment','billing'));
     }
 
+
+    public function invoice($id)
+    {
+        $order = Order::with(['products' => function($query) {
+            $query->withPivot('quantity', 'price'); 
+        }])->find($id);
+        $total = $order->getTotalAmount();
+        $products = $order->products()->where("order_id", $id)->get();
+        $address= Address::where("id",  $order->address_id)->first();
+        $payment = Payment::where("transaction_id", $order->payment_id)->first();
+        $billing = Billing::where("id", $payment->billing_id)->first();
+        $card = Card::where("id", $payment->card_id)->first();
+
+        return view('/User/Order/invoice', compact('order', 'products', 'total', 'address','payment','billing', 'card'));
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::findOrFail( $id );
+        if($order->status === 'canceled' ){
+            return redirect()->back()->with('error', "Order has already been cancelled.");
+        }
+        else if($order->status !== 'shipped' && $order->status !== 'delivered'){
+            $order->status = 'canceled';
+            $order->save();
+            return redirect()->back()->with('success', "Order canceled!");
+        }
+        else{
+            return redirect()->back()->with('error', "Order not eligble for cancellation. Contact customer support.");
+        }
+    }
 
     public function edit($id)
     {

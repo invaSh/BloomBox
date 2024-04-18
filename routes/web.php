@@ -100,6 +100,14 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/order/store', [OrderController::class,'store'])->name('order.store');
 
+    Route::get('/order/{id}/list', [OrderController::class,'index'])->name('order.list');
+
+    Route::get('/order/details/{id}', [OrderController::class,'show'])->name('order.show');
+
+    Route::get('/order/details/{id}/invoice', [OrderController::class,'invoice'])->name('order.invoice');
+
+    Route::post('/order/details/{id}', [OrderController::class,'cancel'])->name('order.cancel');
+
     Route::post('/address/store', [OrderController::class,'storeAddress'])->name('address.store');
 
     Route::get('/thankyou', [OrderController::class,'thanks'])->name('order.thanku');

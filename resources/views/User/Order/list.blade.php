@@ -36,7 +36,7 @@
             top: 0;
             bottom: 20px;
             overflow-y: auto;
-            height: 300px
+            height: 400px
         }
 
         .sidebar .nav-item.active {
@@ -71,11 +71,6 @@
             color: red;
         }
 
-        .wrapper .sidebar .active {
-            background-color: #413555 !important;
-            border: transparent !important;
-        }
-
         .no-bullets {
             list-style-type: none;
             padding-top: 2rem;
@@ -107,17 +102,7 @@
 <x-layout>
     <main class="container wrapper my-5">
         <div class="row orders">
-            <div class="col-md-3 col-lg-2 d-none d-md-block sidebar card">
-                <div class="card-header mb-2">
-                    <h5>Hi there {{ auth()->user()->name }}!</h5>
-                    <h6>Thank you for choosing BloomBox!</h6>
-                </div>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">Orders</a>
-                    <a href="#" class="list-group-item list-group-item-action">Personal Information</a>
-                    <a href="#" class="list-group-item list-group-item-action">Addresses</a>
-                </div>
-            </div>
+            <x-sidebar/>
             <div class="col-md-9 col-lg-10">
                 <div class="card p-3 rounded-2 mb-3">
                     <h2>Orders</h2>

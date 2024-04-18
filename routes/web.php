@@ -76,54 +76,72 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/admin/users/create', [UserController::class, 'store'])->name('users.store');
 
     Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-    
+
     Route::post('/admin/users/edit/{id}', [UserController::class, 'update'])->name('users.update');
-    
+
     Route::post('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-    
-    
+
+
 });
 
 Route::middleware(['auth'])->group(function () {
-    
-    Route::get('/product/{id}', [HomeController::class,'show'])->name('product.show');
-    
-    Route::get('/cart', [CartController::class,'index'])->name('cart.index');
-    
+
+    Route::get('/product/{id}', [HomeController::class, 'show'])->name('product.show');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
     Route::post('/user/cart', [CartController::class, 'store'])->name('cart.store');
 
     Route::post('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
+
+    Route::post('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::get('/order/{id}', [OrderController::class, 'create'])->name('order.create');
+
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+
+    Route::get('/order/{id}/list', [OrderController::class, 'index'])->name('order.list');
+
+    Route::get('/order/details/{id}', [OrderController::class, 'show'])->name('order.show');
+
+    Route::get('/order/details/{id}/invoice', [OrderController::class, 'invoice'])->name('order.invoice');
+
+    Route::post('/order/details/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
+
+    Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
+
+    Route::post('/address/{id}', [AddressController::class, 'update'])->name('address.update');
     
-    Route::post('/cart/{id}', [CartController::class,'destroy'])->name('cart.destroy');
+    Route::post('/addresses/{id}/delete', [AddressController::class, 'destroy'])->name('address.destroy');
     
-    Route::get('/order/{id}', [OrderController::class,'create'])->name('order.create');
+    Route::get('/order/{userId}/list/address', [AddressController::class, 'index'])->name('address.list');
     
-    Route::post('/order/store', [OrderController::class,'store'])->name('order.store');
-
-    Route::get('/order/{id}/list', [OrderController::class,'index'])->name('order.list');
-
-    Route::get('/order/details/{id}', [OrderController::class,'show'])->name('order.show');
-
-    Route::get('/order/details/{id}/invoice', [OrderController::class,'invoice'])->name('order.invoice');
-
-    Route::post('/order/details/{id}', [OrderController::class,'cancel'])->name('order.cancel');
-
-    Route::post('/address/store', [OrderController::class,'storeAddress'])->name('address.store');
-
-    Route::get('/thankyou', [OrderController::class,'thanks'])->name('order.thanku');
+    Route::get('/order/{userId}/list/billing', [BillingController::class, 'index'])->name('billing.list');
     
-    Route::post('/billing/store', [OrderController::class,'storeBilling'])->name('billing.store');
+    Route::post('/billing/{id}', [BillingController::class, 'update'])->name('billing.update');
+    
+    Route::post('/billing/{id}/delete', [BillingController::class, 'destroy'])->name('billing.destroy');
+    
+    Route::get('/order/{userId}/list/card', [CardController::class, 'index'])->name('card.list');
+    
+    Route::post('/card/{id}/delete', [CardController::class, 'destroy'])->name('card.destroy');
 
-    Route::post('/card/store', [OrderController::class,'storeCard'])->name('card.store');
+    Route::post('/card/{id}', [CardController::class, 'update'])->name('card.update');
 
-    Route::get('/shop-all', [ShopAllController::class,'index'])->name('shopall.index');
+    Route::get('/thankyou', [OrderController::class, 'thanks'])->name('order.thanku');
+
+    Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');
+
+    Route::post('/card/store', [CardController::class, 'store'])->name('card.store');
+
+    Route::get('/shop-all', [ShopAllController::class, 'index'])->name('shop-all');
 
 
     Route::get('/occasions', function () {
         return view('occasion');
     });
 
-    
+
     Route::get('/flowers', function () {
         return view('flowers');
     });

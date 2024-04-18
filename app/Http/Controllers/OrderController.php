@@ -53,145 +53,8 @@ class OrderController extends Controller
         return view("/user/order/create", compact("products", "productTotal", "userAddresses", "userBillings", "userCards"));
     }
 
-    public function storeAddress(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'street' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'zip' => 'required|numeric|digits:5'
-        ]);
-
-        $validator->setCustomMessages([
-            'street.required' => 'Street',
-            'city.required' => 'City',
-            'state.required' => 'State',
-            'country.required' => 'Country',
-            'zip.required' => 'Zip',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $user = Auth::user();
-
-        $address = Address::create([
-            "user_id" => $user->id,
-            "street" => $request->street,
-            "city" => $request->city,
-            "state" => $request->input("state"),
-            "country" => $request->input("country"),
-            "zip" => $request->zip
-        ]);
-
-        if (!$address) {
-            return redirect()->back()->with("addressError", "Error trying to add address. Try again.");
-        }
-        return redirect()->back();
-
-    }
-    public function storeBilling(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            "name" => "required",
-            "email" => "required",
-            "phone" => "required",
-            "address" => "required",
-            "city" => "required",
-            "state" => "required",
-            "country" => "required",
-            "zip" => "required"
-        ]);
-
-        $validator->setCustomMessages([
-            "name" => "Name",
-            "email" => "Email",
-            "phone" => "Phone",
-            "address" => "Address",
-            "city" => "City",
-            "state" => "State",
-            "country" => "Country",
-            "zip" => "Zip",
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-
-        $user = Auth::user();
-
-        $billing = Billing::create([
-            "user_id" => $user->id,
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone" => $request->phone,
-            "address" => $request->address,
-            "city" => $request->city,
-            "state" => $request->input("state"),
-            "country" => $request->input("country"),
-            "zip" => $request->zip
-        ]);
-
-        if (!$billing) {
-            return redirect()->back()->with("addressError", "Error trying to add address. Try again.");
-        }
-
-        return redirect()->back();
-    }
-    public function storeCard(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'number' => 'required',
-            'expiration_date' => 'required',
-            'cvc' => 'required',
-            'holder' => 'required',
-        ]);
-
-        $validator->setCustomMessages([
-            'number.required' => 'Card number',
-            'expiration_date.required' => 'Card Expiration date',
-            'cvc.required' => 'CVC',
-            'holder.required' => 'Card holder',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $user = Auth::user();
-        $card = Card::create([
-            "number" => $request->number,
-            "expiration_date" => $request->expiration_date,
-            "cvc" => $request->cvc,
-            "holder" => $request->holder,
-            "user_id" => $user->id,
-        ]);
-
-        if (!$card) {
-            return redirect()->back()->with("addressError", "Error trying to add card. Try again.");
-        }
-
-        return redirect()->back();
-    }
-
     public function store(Request $request)
     {
-        // dd([
-        //     "total" => $request->total,
-        //     "postCard" => $request->postCard,
-        //     "postShipping" => $request->postShipping
-        // ]);
-
-
         $validator = Validator::make($request->all(), [
             'postShipping' => 'required',
             'postBilling' => 'required',
@@ -228,16 +91,6 @@ class OrderController extends Controller
                 ->withInput();
         }
 
-
-        // dd([
-        //     'transaction_id' => $payment->id,
-        //     "user_id" => $payment->user_id,
-        //     "amount" => $payment->amount,
-        //     "status" => $payment->status,
-        //     "card_id" => $payment->card_id,
-        //     "billing_id" => $payment->billing_id,
-        // ]);
-
         $order = Order::create([
             "status" => "pending",
             "user_id" => Auth::user()->id,
@@ -250,13 +103,6 @@ class OrderController extends Controller
                 ->withErrors(['error' => 'Order failed. Try again.'])
                 ->withInput();
         }
-
-        // dd([
-        //     "status" => $order->status,
-        //     "user_id" => $order->user_id,
-        //     "address_id" => $order->address_id,
-        //     "payment_id" => $order->payment_id,
-        // ]);
 
         $products = $request->input('productIds');
         $quantities = $request->input('quantities');

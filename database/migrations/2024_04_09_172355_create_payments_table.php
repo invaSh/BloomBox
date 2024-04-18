@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('amount', 10, 2);
             $table->enum('payment_method', ['card', 'cash']);
-            $table->enum('status', ['pending', 'completed', 'failed']);
+            $table->enum('status', ['pending', 'completed', 'failed','refunded']);
             $table->unsignedBigInteger('card_id')->nullable();
             $table->unsignedBigInteger('billing_id')->nullable();
             $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');

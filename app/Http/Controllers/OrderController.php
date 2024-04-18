@@ -326,11 +326,13 @@ class OrderController extends Controller
     public function cancel($id)
     {
         $order = Order::findOrFail( $id );
+        $payment = Payment::where('user_id', Auth::user()->id);
         if($order->status === 'canceled' ){
             return redirect()->back()->with('error', "Order has already been cancelled.");
         }
         else if($order->status !== 'shipped' && $order->status !== 'delivered'){
             $order->status = 'canceled';
+            $payment->status = 'refunded';
             $order->save();
             return redirect()->back()->with('success', "Order canceled!");
         }

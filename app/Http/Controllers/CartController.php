@@ -59,4 +59,20 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product removed successfully!');
     }
 
+    public function update(Request $request, $productId)
+    {
+        $cart = Cart::where('user_id', auth()->id())->firstOrFail();
+        $quantityChange = $request->input('quantityChange', 0);
+        $product = $cart->products()->findOrFail($productId);
+        $newQuantity = $product->pivot->quantity + $quantityChange;
+
+        if ($newQuantity > 0) {
+            $cart->products()->updateExistingPivot($productId, ['quantity' => $newQuantity]);
+        } else {
+            $cart->products()->detach($productId);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 }

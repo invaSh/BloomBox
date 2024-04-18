@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('number')->nullable(); 
+            $table->string('number', 19)->nullable(); 
             $table->date('expiration_date')->nullable();
             $table->integer('cvc')->nullable();
             $table->string('holder')->nullable();

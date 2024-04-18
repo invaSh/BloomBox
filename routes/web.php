@@ -86,13 +86,13 @@ Route::middleware(['role:admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     
-    Route::get('/shop-all', [ShopAllController::class, 'getAll'])->name('shop-all');
-    
     Route::get('/product/{id}', [HomeController::class,'show'])->name('product.show');
     
     Route::get('/cart', [CartController::class,'index'])->name('cart.index');
     
     Route::post('/user/cart', [CartController::class, 'store'])->name('cart.store');
+
+    Route::post('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
     
     Route::post('/cart/{id}', [CartController::class,'destroy'])->name('cart.destroy');
     
@@ -115,6 +115,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/billing/store', [OrderController::class,'storeBilling'])->name('billing.store');
 
     Route::post('/card/store', [OrderController::class,'storeCard'])->name('card.store');
+
+    Route::get('/shop-all', [ShopAllController::class,'index'])->name('shopall.index');
+
 
     Route::get('/occasions', function () {
         return view('occasion');

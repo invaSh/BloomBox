@@ -74,7 +74,6 @@
                                         <a class="btn btn-primary mt-auto mb-3"
                                             href="{{ route('product.show', $product->id) }}">View more</a>
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-
                                         <input id="inputQuantity-{{ $product->id }}" type="num" name="quantity"
                                             value="1" hidden>
                                         <button type="submit" class="btn kartBtn">

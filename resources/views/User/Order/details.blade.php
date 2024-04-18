@@ -33,6 +33,120 @@
         .customT .border-bottom {
             border-bottom: 1px solid #41355569 !important;
         }
+
+        .steps .step {
+            display: block;
+            width: 100%;
+            margin-bottom: 35px;
+            text-align: center
+        }
+
+        .steps .step .step-icon-wrap {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 80px;
+            text-align: center
+        }
+
+        .steps .step .step-icon-wrap::before,
+        .steps .step .step-icon-wrap::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            width: 50%;
+            height: 3px;
+            margin-top: -1px;
+            background-color: #e1e7ec;
+            content: '';
+            z-index: 1
+        }
+
+        .steps .step .step-icon-wrap::before {
+            left: 0
+        }
+
+        .steps .step .step-icon-wrap::after {
+            right: 0
+        }
+
+        .steps .step .step-icon {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border: 1px solid #e1e7ec;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            color: #374250;
+            font-size: 38px;
+            line-height: 81px;
+            z-index: 5
+        }
+
+        .steps .step .step-title {
+            margin-top: 16px;
+            margin-bottom: 0;
+            color: #606975;
+            font-size: 14px;
+            font-weight: 500
+        }
+
+        .steps .step:first-child .step-icon-wrap::before {
+            display: none
+        }
+
+        .steps .step:last-child .step-icon-wrap::after {
+            display: none
+        }
+
+        .steps .step.completed .step-icon-wrap::before,
+        .steps .step.completed .step-icon-wrap::after {
+            background-color: #413555
+        }
+
+        .steps .step.completed .step-icon {
+            border-color: #413555;
+            background-color: #413555;
+            color: #fff
+        }
+
+        @media (max-width: 576px) {
+
+            .flex-sm-nowrap .step .step-icon-wrap::before,
+            .flex-sm-nowrap .step .step-icon-wrap::after {
+                display: none
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .flex-md-nowrap .step .step-icon-wrap::before,
+            .flex-md-nowrap .step .step-icon-wrap::after {
+                display: none
+            }
+        }
+
+        @media (max-width: 991px) {
+
+            .flex-lg-nowrap .step .step-icon-wrap::before,
+            .flex-lg-nowrap .step .step-icon-wrap::after {
+                display: none
+            }
+        }
+
+        @media (max-width: 1200px) {
+
+            .flex-xl-nowrap .step .step-icon-wrap::before,
+            .flex-xl-nowrap .step .step-icon-wrap::after {
+                display: none
+            }
+        }
+
+        .bg-faded,
+        .bg-secondary {
+            background-color: #f5f5f5 !important;
+        }
     </style>
 @endsection
 
@@ -42,10 +156,17 @@
 
         <div class="d-flex flex-column align-items-center my-3">
             @if (session('success'))
-                <div class="alert alert-success text-center alert-dismissible fade show mb-1" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                @if ($payment->payment_method === 'card')
+                    <div class="alert alert-success text-center alert-dismissible fade show mb-1" role="alert">
+                        {{ session('success') }} You will recieve your refund shortly.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @else
+                    <div class="alert alert-success text-center alert-dismissible fade show mb-1" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             @elseif(session('error'))
                 <div class="alert alert-warning text-center alert-dismissible fade show mb-1" role="alert">
                     {{ session('error') }}
@@ -69,7 +190,7 @@
                                     <span class="me-3">Date placed: {{ $order->created_at }}</span>
                                 </div>
                                 <div class="d-flex">
-                                    
+
                                     <div class="dropdown">
                                         <button class="btn btn-link p-0 text-muted" type="button"
                                             data-bs-toggle="dropdown">
@@ -77,8 +198,8 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li><a href="{{ route('order.invoice', $order->id) }}"
-                                                class="dropdown-item"><span
-                                                    class="text"><i class="bi bi-receipt-cutoff mx-2"></i> Invoice</span></a>
+                                                    class="dropdown-item"><span class="text"><i
+                                                            class="bi bi-receipt-cutoff mx-2"></i> Invoice</span></a>
                                             <li><a class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal{{ $order->id }}" href="#"><i
                                                         class="bi bi-x-circle-fill mx-2"></i></i>
@@ -116,7 +237,7 @@
                                 </div>
                             </div>
                             <table class="table table-striped customT">
-                                <tbody class="border-bottom">
+                                <tbody>
                                     @foreach ($order->products as $item)
                                         <tr>
                                             <td>
@@ -179,15 +300,20 @@
                                 <div class="col-lg-4">
                                     <h3 class="h6">Order Status</h3>
                                     <address>
-                                        <span class="badge {{
-                                            $order->status == 'pending' ? 'bg-warning' :
-                                            ($order->status == 'completed' ? 'bg-success' :
-                                            ($order->status == 'shipped' ? 'bg-info' :
-                                            ($order->status == 'canceled' ? 'bg-danger' : 'bg-secondary')))
-                                        }}" rounded-pill">
+                                        <span
+                                            class="badge {{ $order->status == 'pending'
+                                                ? 'bg-warning'
+                                                : ($order->status == 'completed'
+                                                    ? 'bg-success'
+                                                    : ($order->status == 'shipped'
+                                                        ? 'bg-info'
+                                                        : ($order->status == 'canceled'
+                                                            ? 'bg-danger'
+                                                            : 'bg-secondary'))) }}"
+                                            rounded-pill">
                                             {{ strtoupper($order->status) }}
                                         </span>
-                                        
+
                                     </address>
                                 </div>
                             </div>
@@ -200,7 +326,7 @@
                         <div class="card-body">
                             <h3 class="h6"><u>Notice</u></h3>
                             <p>All orders are eligble for cancelling until the package has been shipped. After shipping,
-                                cancellations <strong>will not</strong> be excepted.</p>
+                                cancellations <strong>will not</strong> be accepted.</p>
                         </div>
                     </div>
                     <div class="card mb-4">
@@ -222,8 +348,83 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <input type="hidden" id="orderStatus" value="{{ $order->status }}">
+                    <div class="p-4 text-center text-dark text-lg rounded-top"><span class="text-uppercase">Order
+                            Tracker</span></div>
+                    <div class="card-body">
+                        <div
+                            class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+                            <div class="step step1 completed">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon"><i class="pe-7s-cart"></i></div>
+                                </div>
+                                <h4 class="step-title">Confirmed Order</h4>
+                            </div>
+                            <div class="step step2">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon"><i class="pe-7s-config"></i></div>
+                                </div>
+                                <h4 class="step-title">Processing Order</h4>
+                            </div>
+                            <div class="step step3">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon"><i class="pe-7s-car"></i></div>
+                                </div>
+                                <h4 class="step-title">Product Dispatched</h4>
+                            </div>
+                            <div class="step step4">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon"><i class="pe-7s-home"></i></div>
+                                </div>
+                                <h4 class="step-title">Product Delivered</h4>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-center">
+                                @if ($order->status === 'pending')
+                                    Your order has been confirmed!
+                                @elseif($order->status === 'processing')
+                                    Your order is being processed..
+                                @elseif($order->status === 'shipped')
+                                    Your order is being processed..
+                                @elseif($order->status === 'shipped')
+                                    Your order is on it's way!
+                                @elseif($order->status === 'delivered')
+                                    Yay! Your order has been delivered!
+                                @else 
+                                    Your order was cancelled.    
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const status = document.getElementById('orderStatus').value;
+                //.steps .step.completed .step-icon-wrap::before
+                if (status === 'processing') {
+                    document.querySelector('.step2').classList.add('completed');
+                } else if (status === 'shipped') {
+                    document.querySelector('.step2').classList.add('completed');
+                    document.querySelector('.step3').classList.add('completed');
+                } else if (status === 'delivered') {
+                    document.querySelector('.step2').classList.add('completed');
+                    document.querySelector('.step3').classList.add('completed');
+                    document.querySelector('.step4').classList.add('completed');
+                } else if (status === 'canceled') {
+                    document.querySelector('.step1').classList.remove('completed');
+                }
+
+            })
+        </script>
+    @endsection
 
 </x-layout>

@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('resources\views\Admin\User\details.blade.php', compact('user'));
+        return view('/admin/user/details', compact('user'));
     }
 
     public function edit($id)

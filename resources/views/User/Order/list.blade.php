@@ -102,7 +102,7 @@
 <x-layout>
     <main class="container wrapper my-5">
         <div class="row orders">
-            <x-sidebar/>
+            <x-sidebar />
             <div class="col-md-9 col-lg-10">
                 <div class="card p-3 rounded-2 mb-3">
                     <h2>Orders</h2>
@@ -114,13 +114,25 @@
                                 <ul class="status pt-3 d-flex no-bullets col-lg-8 col-12">
                                     <li class="">#{{ $item->id }}</li>
                                     <li class="">{{ $item->created_at }} </li>
-                                    <li
-                                        class="order-status {{ $item->status == 'pending' || $item->status == 'processing' || $item->status == 'shipped' ? 'pending' : ($item->status == 'delivered' ? 'completed' : ($item->status == 'canceled' ? 'canceled' : '')) }}">
-                                        {{ $item->status }}</li>
+                                    <li class="order-status 
+                                        {{ $item->status == 'pending'
+                                            ? 'text-warning'
+                                            : ($item->status == 'processing'
+                                                ? 'text-primary'
+                                                : ($item->status == 'shipped'
+                                                    ? 'text-info'
+                                                    : ($item->status == 'delivered'
+                                                        ? 'text-success'
+                                                        : ($item->status == 'canceled'
+                                                            ? 'text-danger'
+                                                            : '')))) }}">
+                                        {{ $item->status }}
+                                    </li>
                                     <li class="">${{ $orderTotals[$item->id] }}</li>
                                 </ul>
                                 <div class="details col-lg-4 col-12 d-flex">
-                                    <a href="{{ route('order.show', $item->id) }}" class="text-dark text-decoration-none">View Details <i
+                                    <a href="{{ route('order.show', $item->id) }}"
+                                        class="text-dark text-decoration-none">View Details <i
                                             class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>

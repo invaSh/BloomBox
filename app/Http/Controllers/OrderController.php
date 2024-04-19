@@ -141,61 +141,131 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['products' => function($query) {
-            $query->withPivot('quantity', 'price'); 
-        }])->find($id);
+        $order = Order::with([
+            'products' => function ($query) {
+                $query->withPivot('quantity', 'price');
+            }
+        ])->find($id);
         $total = $order->getTotalAmount();
         $products = $order->products()->where("order_id", $id)->get();
-        $address= Address::where("id",  $order->address_id)->first();
+        $address = Address::where("id", $order->address_id)->first();
         $payment = Payment::where("transaction_id", $order->payment_id)->first();
         $billing = Billing::where("id", $payment->billing_id)->first();
 
-        return view('/User/Order/details', compact('order', 'products', 'total', 'address','payment','billing'));
+        return view('/User/Order/details', compact('order', 'products', 'total', 'address', 'payment', 'billing'));
     }
 
 
     public function invoice($id)
     {
-        $order = Order::with(['products' => function($query) {
-            $query->withPivot('quantity', 'price'); 
-        }])->find($id);
+        $order = Order::with([
+            'products' => function ($query) {
+                $query->withPivot('quantity', 'price');
+            }
+        ])->find($id);
         $total = $order->getTotalAmount();
         $products = $order->products()->where("order_id", $id)->get();
-        $address= Address::where("id",  $order->address_id)->first();
+        $address = Address::where("id", $order->address_id)->first();
         $payment = Payment::where("transaction_id", $order->payment_id)->first();
         $billing = Billing::where("id", $payment->billing_id)->first();
         $card = Card::where("id", $payment->card_id)->first();
 
-        return view('/User/Order/invoice', compact('order', 'products', 'total', 'address','payment','billing', 'card'));
+        return view('/User/Order/invoice', compact('order', 'products', 'total', 'address', 'payment', 'billing', 'card'));
     }
 
     public function cancel($id)
     {
-        $order = Order::findOrFail( $id );
-        $payment = Payment::where('user_id', Auth::user()->id);
-        if($order->status === 'canceled' ){
+        $order = Order::findOrFail($id);
+        $payment = Payment::where('user_id', Auth::user()->id)->first();
+        if ($order->status === 'canceled') {
             return redirect()->back()->with('error', "Order has already been cancelled.");
-        }
-        else if($order->status !== 'shipped' && $order->status !== 'delivered'){
+        } else if ($order->status !== 'shipped' && $order->status !== 'delivered') {
             $order->status = 'canceled';
-            $payment->status = 'refunded';
             $order->save();
             return redirect()->back()->with('success', "Order canceled!");
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', "Order not eligble for cancellation. Contact customer support.");
         }
     }
 
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $products = $order->products()->withPivot("quantity", "price")->get();
+        $address = Address::where("id", $order->address_id)->first();
+        $payment = Payment::where("transaction_id", $order->payment_id)->first();
+        $billing = Billing::where("id", $payment->billing_id)->first();
+        $card = Card::where("id", $payment->card_id)->first();
+        $user = User::where("id", $order->user_id)->first();
+        return view("/admin/order/edit", compact("order", "products", "payment", "address", "billing", "card", "user"));
+    }
+
+    public function list()
+    {
+        $orders = Order::all();
+        return view("/admin/order/list", compact("orders"));
+    }
+
+    public function details($id)
+    {
+        $order = Order::findOrFail($id);
+        $products = $order->products()->withPivot("quantity", "price")->get();
+        $address = Address::where("id", $order->address_id)->first();
+        $payment = Payment::where("transaction_id", $order->payment_id)->first();
+        $billing = Billing::where("id", $payment->billing_id)->first();
+        $card = Card::where("id", $payment->card_id)->first();
+        $user = User::where("id", $order->user_id)->first();
+        return view("/admin/order/details", compact("order", "products", "payment", "address", "billing", "card", "user"));
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        $quantities = $request->input('quantities', []);
+
+        foreach ($quantities as $productId => $quantity) {
+            if ($quantity > 0) {
+                $product = Product::find($productId);
+                if ($product) {
+                    $newPrice = $quantity * $product->price;
+                    $order->products()->updateExistingPivot($productId, [
+                        'quantity' => $quantity,
+                        'price' => $newPrice
+                    ]);
+                }
+            }
+        }
+
+        $order->refresh();
+
+        return back()->with('success', 'Product quantities updated.');
+    }
+
+    public function orderStatusUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,processing,shipped,delivered'
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->status = $validated['status'];
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order status updated successfully.');
+    }
+    public function paymentStatusUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,completed,failed,refunded'
+        ]);
+
+        $payment = Payment::findOrFail($id);
+        $payment->status = $validated['status'];
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Payment status updated successfully.');
     }
 
 

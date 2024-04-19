@@ -26,6 +26,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
         integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
 
 
     <style>
@@ -139,6 +142,9 @@
             }
         }
     </style>
+
+    @yield('css')
+
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 </head>
 
@@ -247,10 +253,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="#ordersSubmenu" data-bs-toggle="collapse" aria-expanded="false"
+                            class="nav-link dropdown-toggle">
                             <i class="bi bi-calendar2-minus" width="16" height="16"></i>
                             Orders
                         </a>
+                        <ul class="collapse list-unstyled" id="ordersSubmenu">
+                            <li><a href="{{ url('/admin/orders/list') }}" class="nav-link"><i
+                                        class="bi bi-arrow-right"width="16" height="16"></i>View All Orders</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#productsSubmenu" data-bs-toggle="collapse" aria-expanded="false"
@@ -326,11 +338,12 @@
                     <a href="#"
                         class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('storage/' . auth()->user()->imgUrl) }}" alt="" width="32" height="32"
-                            class="rounded-circle me-2">
+                        <img src="{{ asset('storage/' . auth()->user()->imgUrl) }}" alt="" width="32"
+                            height="32" class="rounded-circle me-2">
                         <strong>{{ auth()->user()->username }}</strong>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary " aria-lbelledby="dropdownUser1">
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary "
+                        aria-lbelledby="dropdownUser1">
                         <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -390,6 +403,8 @@
             fileNameElement.textContent = event.target.files[0].name;
         }
     </script>
+
+    @yield('scripts')
 
 </body>
 

@@ -284,9 +284,23 @@
                                     <p>{{ strtoupper($payment->payment_method) }} <br>
                                         Total: ${{ $payment->amount }}
                                         <span
-                                            class="badge {{ $payment->status == 'pending' ? 'bg-warning' : ($payment->status == 'completed' ? 'bg-success' : 'bg-danger') }} rounded-pill">
+                                            class="badge {{ $payment->status == 'pending'
+                                                ? 'bg-warning'
+                                                : ($payment->status == 'completed'
+                                                    ? 'bg-success'
+                                                    : ($payment->status == 'refunded'
+                                                        ? 'bg-info'
+                                                        : 'bg-danger')) }} rounded-pill">
                                             {{ strtoupper($payment->status) }}
                                         </span>
+                                    </p>
+                                    @if ($order->status === 'canceled')
+                                        @if ($payment->status === 'refunded')
+                                            <p class="text-success">Your refund has been submitted.</p>
+                                        @else
+                                            <p class="text-danger">Your refund will be submitted shortly.</p>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="col-lg-4">
                                     <h3 class="h6">Billing address</h3>
@@ -301,16 +315,16 @@
                                     <h3 class="h6">Order Status</h3>
                                     <address>
                                         <span
-                                            class="badge {{ $order->status == 'pending'
-                                                ? 'bg-warning'
-                                                : ($order->status == 'completed'
-                                                    ? 'bg-success'
-                                                    : ($order->status == 'shipped'
-                                                        ? 'bg-info'
-                                                        : ($order->status == 'canceled'
-                                                            ? 'bg-danger'
-                                                            : 'bg-secondary'))) }}"
-                                            rounded-pill">
+                                            class="badge rounded-pill 
+                                {{ $order->status == 'pending'
+                                    ? 'bg-warning'
+                                    : ($order->status == 'processing'
+                                        ? 'bg-secondary'
+                                        : ($order->status == 'shipped'
+                                            ? 'bg-info'
+                                            : ($order->status == 'delivered'
+                                                ? 'bg-success'
+                                                : 'bg-danger'))) }}">
                                             {{ strtoupper($order->status) }}
                                         </span>
 
@@ -388,13 +402,11 @@
                                 @elseif($order->status === 'processing')
                                     Your order is being processed..
                                 @elseif($order->status === 'shipped')
-                                    Your order is being processed..
-                                @elseif($order->status === 'shipped')
                                     Your order is on it's way!
                                 @elseif($order->status === 'delivered')
                                     Yay! Your order has been delivered!
-                                @else 
-                                    Your order was cancelled.    
+                                @else
+                                    Your order was cancelled.
                                 @endif
                             </div>
 

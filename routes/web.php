@@ -67,6 +67,18 @@ Route::middleware(['role:admin,employee'])->group(function () {
     Route::get('/admin/users/list', [UserController::class, 'index'])->name('users.list');
 
     Route::get('/admin/users/details/{id}', [UserController::class, 'show'])->name('users.show');
+
+    Route::get('/admin/orders/list', [OrderController::class, 'list'])->name('orders.list');
+
+    Route::get('/admin/order/{id}', [OrderController::class, 'details'])->name('order.details');
+
+    Route::get('/admin/order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
+    
+    Route::post('/admin/order/edit/{id}', [OrderController::class, 'update'])->name('order.update');
+
+    Route::post('/admin/order/status/update/{id}', [OrderController::class, 'orderStatusUpdate'])->name('status.update');
+    
+    Route::post('/admin/order/payment/status/update/{id}', [OrderController::class, 'paymentStatusUpdate'])->name('payment.update');
 });
 
 Route::middleware(['role:admin'])->group(function () {

@@ -125,9 +125,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/{userId}/list/card', [CardController::class, 'index'])->name('card.list');
     
     Route::post('/card/{id}/delete', [CardController::class, 'destroy'])->name('card.destroy');
-
+    
     Route::post('/card/{id}', [CardController::class, 'update'])->name('card.update');
+    
+    Route::get('/order/{userId}/list/profile', [ProfileController::class, 'show'])->name('profile.show');
 
+    Route::post('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::get('/thankyou', [OrderController::class, 'thanks'])->name('order.thanku');
 
     Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');

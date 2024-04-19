@@ -4,10 +4,10 @@
         <h6>Thank you for choosing BloomBox!</h6>
     </div>
     <div class="list-group">
-        <a href="{{ route('profile.show', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('user.profile') ? 'active' : '' }}">Personal Information</a>
+        <a href="{{ route('profile.show', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('profile.show') ? 'active' : '' }}">Personal Information</a>
         <a href="{{ route('order.list', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('order.list') ? 'active' : '' }}">Orders</a>
         <a href="{{ route('address.list', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('address.list') ? 'active' : '' }}">Addresses</a>
-        <a href="{{ route('billing.list', auth()->user()->id) }}" class="list-group-item list-group-item-action">Billing</a>
+        <a href="{{ route('billing.list', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('billing.list') ? 'active' : '' }}"">Billing</a>
         <a href="{{ route('card.list', auth()->user()->id) }}" class="list-group-item list-group-item-action {{ request()->routeIs('card.list') ? 'active' : '' }}">Cards</a>
     </div>
 </div>

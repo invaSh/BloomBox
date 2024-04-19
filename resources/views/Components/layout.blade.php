@@ -219,7 +219,7 @@
                                     {{ auth()->user()->username }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Your Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('profile.show', auth()->user()->id) }}">Your Profile</a></li>
                                     <li><a class="dropdown-item"
                                             href="{{ route('order.list', auth()->user()->id) }}">Orders</a></li>
                                     <hr style="margin: 10px;">

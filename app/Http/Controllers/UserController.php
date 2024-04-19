@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -81,8 +82,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        $orders = Order::where("user_id", $id)->get();
 
-        return view('/admin/user/details', compact('user'));
+        return view('/admin/user/details', compact('user', 'orders'));
     }
 
     public function edit($id)
@@ -137,8 +139,6 @@ class UserController extends Controller
         return redirect()->route('users.list')->with('success', 'User updated successfully!');
     }
     
-
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);

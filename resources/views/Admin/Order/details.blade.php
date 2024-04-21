@@ -218,8 +218,6 @@
                         <u>Back to List</u>
                     </span>
                 </a>
-
-
             </h5>
         </div>
         <div class="row mt-5">
@@ -252,17 +250,22 @@
                                         <td>Payment status: </td>
                                         <td>
                                             @if ($payment->payment_method === 'cash')
-                                                <span class="badge {{ $payment->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ strtoupper($payment->status) }}</span>
+                                                <span
+                                                    class="badge {{ $payment->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ strtoupper($payment->status) }}</span>
                                             @else
-                                            <span class="badge 
-                                            {{ $payment->status == 'pending' ? 'bg-waring' :
-                                               ($payment->status == 'completed' ? 'bg-success' :
-                                               ($payment->status == 'refunded' ? 'bg-info' :
-                                               ($payment->status == 'failed' ? 'bg-danger' : 'bg-secondary')))
-                                            }} rounded-pill">
-                                            {{ strtoupper($payment->status) }}
-                                        </span>
-                                        
+                                                <span
+                                                    class="badge 
+                                            {{ $payment->status == 'pending'
+                                                ? 'bg-waring'
+                                                : ($payment->status == 'completed'
+                                                    ? 'bg-success'
+                                                    : ($payment->status == 'refunded'
+                                                        ? 'bg-info'
+                                                        : ($payment->status == 'failed'
+                                                            ? 'bg-danger'
+                                                            : 'bg-secondary'))) }} rounded-pill">
+                                                    {{ strtoupper($payment->status) }}
+                                                </span>
                                             @endif
                                         </td>
                                     </tr>

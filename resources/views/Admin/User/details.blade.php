@@ -92,6 +92,7 @@
             justify-content: flex-end;
             padding-right: 2rem;
         }
+
     </style>
 @endsection
 
@@ -149,7 +150,7 @@
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-md-12">
-                        <img src="{{ asset('storage/' . $user->imgUrl) }}" id="detailsImg"
+                        <img src="{{ asset('storage/product-img/' . $user->imgUrl) }}" id="detailsImg"
                             class="rounded img img-fluid w-100">
                     </div>
                 </div>

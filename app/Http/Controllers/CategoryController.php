@@ -28,12 +28,20 @@ class CategoryController extends Controller
             'description' => 'required'
         ]);
 
-        $product = Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'description' => $request->description,
         ]);
 
-        return redirect('/admin/category/list')->with('success', 'Category successfully stored.');
+        if ($category) {
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($category)
+                ->log(' has added a new category.');
+            return redirect('/admin/category/list')->with('success', 'Category successfully stored.');
+        }
+
+        return redirect('/admin/category/list')->with('error', 'There was an error creating the category.');
 
     }
 
@@ -74,10 +82,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if(!$category->delete()) {
+        if (!$category->delete()) {
             return redirect()->route('category.list')->withErrors(['error' => 'There was an error deleting the category!']);
         }
 
-        return redirect('/admin/category/list')->with('success', 'Category successfully deleted.');    
+        return redirect('/admin/category/list')->with('success', 'Category successfully deleted.');
     }
 }

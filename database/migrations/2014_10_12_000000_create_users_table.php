@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('imgUrl')->nullable();
             $table->enum('role', ['admin','user','employee']);
-            $table->rememberToken();
             $table->timestamps();
         });
 

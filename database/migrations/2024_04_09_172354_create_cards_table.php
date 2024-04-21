@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('cvc')->nullable();
             $table->string('holder')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
         DB::statement("ALTER TABLE cards AUTO_INCREMENT = 444791;");

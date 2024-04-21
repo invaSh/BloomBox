@@ -21,10 +21,8 @@ Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 //Admin v
 
 Route::middleware(['role:admin,employee'])->group(function () {
-
-    Route::get('/admin', function () {
-        return view('Admin/dashboard');
-    });
+    
+    Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/category/list', [CategoryController::class, 'index'])->name('category.list');
 
@@ -79,6 +77,8 @@ Route::middleware(['role:admin,employee'])->group(function () {
     Route::post('/admin/order/status/update/{id}', [OrderController::class, 'orderStatusUpdate'])->name('status.update');
     
     Route::post('/admin/order/payment/status/update/{id}', [OrderController::class, 'paymentStatusUpdate'])->name('payment.update');
+
+
 });
 
 Route::middleware(['role:admin'])->group(function () {

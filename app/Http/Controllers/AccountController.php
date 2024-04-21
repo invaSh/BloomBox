@@ -32,7 +32,7 @@ class AccountController extends Controller
 
             $user = Auth::user();
             if ($user->role == 'admin' || $user->role == 'employee') {
-                return redirect('/admin')->with("success", "Welcome to the admin dashboard!");
+                return redirect('/admin/')->with("success", "Welcome to the admin dashboard!");
             } else {
                 return redirect('/')->with("success", "Login successful!");
             }

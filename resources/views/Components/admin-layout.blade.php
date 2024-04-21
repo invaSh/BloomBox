@@ -29,6 +29,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <style>
@@ -240,14 +241,8 @@
                 </div>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-houses" width="16" height="16"></i>
-                            Home
-                        </a>
-                    </li>
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="bi bi-speedometer" width="16" height="16"></i>
                             Dashboard
                         </a>

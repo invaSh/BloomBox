@@ -123,6 +123,11 @@ class OrderController extends Controller
 
         $order->products()->attach($productData);
 
+        activity('new')
+            ->causedBy(auth()->user())
+            ->performedOn($order)
+            ->log(' placed an order.');
+
         $cart = Cart::where("user_id", Auth::user()->id)->first();
 
         if ($cart) {
@@ -182,6 +187,10 @@ class OrderController extends Controller
         } else if ($order->status !== 'shipped' && $order->status !== 'delivered') {
             $order->status = 'canceled';
             $order->save();
+            activity('canceled')
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->log(' has cancelled an order.');
             return redirect()->back()->with('success', "Order canceled!");
         } else {
             return redirect()->back()->with('error', "Order not eligble for cancellation. Contact customer support.");
@@ -253,6 +262,11 @@ class OrderController extends Controller
         $order->status = $validated['status'];
         $order->save();
 
+        activity($order->status)
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->log(' changed #' . $order->id . ' status to ' . $order->status . '.');
+
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
     public function paymentStatusUpdate(Request $request, $id)
@@ -264,6 +278,22 @@ class OrderController extends Controller
         $payment = Payment::findOrFail($id);
         $payment->status = $validated['status'];
         $payment->save();
+
+        $order = Order::where('payment_id', $payment->transaction_id)->first();
+
+        $logMessage = '';
+        if ($payment->status == 'refunded') {
+            $logMessage = ' has issued a refund for order #' . $order->id .'.';
+            activity('refunded')
+                ->causedBy(auth()->user())
+                ->performedOn($payment)
+                ->log($logMessage);
+        }else{
+            activity('refunded')
+                ->causedBy(auth()->user())
+                ->performedOn($payment)
+                ->log(' changed payment status for order #' . $order->id .' to ' . $payment->status . '.');
+        }
 
         return redirect()->back()->with('success', 'Payment status updated successfully.');
     }

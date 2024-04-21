@@ -1,3 +1,14 @@
+@section('css')
+    <style>
+        #icon {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+    </style>
+@endsection
+
 <x-admin-layout>
 
     <div class="container mt-5">
@@ -42,6 +53,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col"></th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
@@ -52,7 +64,9 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }} </td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td><img src="{{ asset('storage/product-img/' . $user->imgUrl) }}" id="icon"
+                                            alt=""></td>
                                     <td>#{{ $user->id }} </td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>

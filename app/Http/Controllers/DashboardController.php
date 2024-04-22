@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
@@ -21,7 +22,8 @@ class DashboardController extends Controller
 
         $activities = Activity::all()->whereNotIn('log_name', ['new'])->sortByDesc('created_at');
 
-        $newOrders = Activity::where('log_name', ['new'])->get()->sortByDesc('created_at');;
+        $newOrders = Activity::where('log_name', ['new'])->get()->sortByDesc('created_at');
+        ;
 
         $dashboardData = [
             "orderNo" => $orders->count(),
@@ -31,8 +33,9 @@ class DashboardController extends Controller
         ];
 
         $top5products = $this->topSoldProductsLast24Hours();
+        $ordersPeak = $this->ordersPeakingData();
 
-        return view("/admin/dashboard", compact("dashboardData", "activities", "newOrders", "top5products"));
+        return view("/admin/dashboard", compact("dashboardData", "activities", "newOrders", "top5products", "ordersPeak"));
     }
 
     public function topSoldProductsLast24Hours()
@@ -54,5 +57,26 @@ class DashboardController extends Controller
         }
 
         return $productDetails;
+    }
+
+    public function ordersPeakingData()
+    {
+        $startDate = Carbon::now()->subDays(7);
+        $endDate = Carbon::now();
+
+        $orderCounts = Order::whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $ordersPeakingData = $orderCounts->map(function ($item) {
+            return [
+                'date' => $item->date, 
+                'count' => $item->count,
+            ];
+        });
+
+        return $ordersPeakingData;
     }
 }

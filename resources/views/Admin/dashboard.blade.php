@@ -176,8 +176,10 @@
 
         <div class="row text-center mt-5">
             <div class="col-lg-6">
-
                 <canvas id="top_products"></canvas>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="order_peaking"></canvas>
             </div>
         </div>
 
@@ -393,13 +395,73 @@
                     data: {
                         labels: productLabels,
                         datasets: [{
-                            label: 'Top products',
+                            label: 'Top products last 24h',
                             data: productQuantities,
                             backgroundColor: backgroundColors
                         }],
                     },
-                    options: {}
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMin: Math.min(...productQuantities) -
+                                        10 // Adjust the value as needed
+                                }
+                            }]
+                        }
+                    }
                 });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                let order_peaking = document.getElementById('order_peaking').getContext('2d');
+
+                let orderLabels = [];
+                let orderCounts = [];
+
+                @foreach ($ordersPeak as $data)
+                    orderLabels.push('{{ $data['date'] }}');
+                    orderCounts.push('{{ $data['count'] }}');
+                @endforeach
+
+                const pastelColors = [
+                    'rgba(255, 204, 204, 0.6)', // Pastel Red
+                    'rgba(255, 229, 204, 0.6)', // Pastel Orange
+                    'rgba(204, 255, 204, 0.6)', // Pastel Green
+                    'rgba(204, 229, 255, 0.6)', // Pastel Blue
+                    'rgba(255, 204, 255, 0.6)', // Pastel Purple
+                    'rgba(255, 255, 204, 0.6)', // Pastel Yellow
+                    'rgba(204, 204, 255, 0.6)', // Pastel Lavender
+                    'rgba(255, 255, 255, 0.6)', // Pastel White
+                ];
+
+                const borderColor = 'rgba(255, 99, 132, 1)';
+
+                let orderPeakingChart = new Chart(order_peaking, {
+                    type: 'line',
+                    data: {
+                        labels: orderLabels,
+                        datasets: [{
+                            label: 'Sales this week',
+                            data: orderCounts,
+                            backgroundColor: pastelColors,
+                            borderColor: borderColor,
+                            borderWidth: 2 
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
             });
         </script>
     @endsection

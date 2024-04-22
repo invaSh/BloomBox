@@ -331,7 +331,7 @@
                     <a href="#"
                         class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('storage/' . auth()->user()->imgUrl) }}" alt="" width="32"
+                        <img src="{{ asset('storage/product-img/' . auth()->user()->imgUrl) }}" alt="" width="32"
                             height="32" class="rounded-circle me-2">
                         <strong>{{ auth()->user()->username }}</strong>
                     </a>

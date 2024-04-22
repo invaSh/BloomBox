@@ -1,4 +1,4 @@
-<header class="bg-secondary py-5">
+<header class="bg-secondary py-5  fade-up">
     <div class="container px-4 px-lg-5 my-5">
         <div class="container d-flex justify-content-center">
             <img src="{{ asset($image) }}" class="img-custom" alt="">

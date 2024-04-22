@@ -1,4 +1,4 @@
-<div class="col-lg-4 mb-5">
+<div class="col-lg-4  fade-up mb-5">
     <div class="card text-dark h-100 shadow border-0 customHover">
         <img class="card-img-top" src="{{$image}}" alt="..." />
         <div class="card-body p-4">

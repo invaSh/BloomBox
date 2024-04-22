@@ -105,6 +105,22 @@
                 display: none;
             }
         }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeUp 0.5s ease-out;
+        }
     </style>
 @endsection
 
@@ -116,8 +132,7 @@
                 <div class="card bg-c-blue order-card">
                     <div class="card-block text-light">
                         <h6 class="m-b-20">Orders Placed</h6>
-                        <h2 class="d-flex justify-content-between"><i
-                                class="bi bi-basket2-fill"></i><span>{{ $dashboardData['orderNo'] }}</span></h2>
+                        <h2 class="d-flex justify-content-between"><i class="bi bi-basket"></i></i><span>{{ $dashboardData['orderNo'] }}</span></h2>
                     </div>
                 </div>
             </div>
@@ -175,10 +190,10 @@
         </div>
 
         <div class="row text-center mt-5">
-            <div class="col-lg-6">
+            <div class="col-lg-6 fade-up">
                 <canvas id="top_products"></canvas>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 fade-up">
                 <canvas id="order_peaking"></canvas>
             </div>
         </div>
@@ -448,7 +463,7 @@
                             data: orderCounts,
                             backgroundColor: pastelColors,
                             borderColor: borderColor,
-                            borderWidth: 2 
+                            borderWidth: 2
                         }]
                     },
                     options: {
@@ -464,6 +479,8 @@
 
             });
         </script>
+
+       
     @endsection
 
 </x-admin-layout>

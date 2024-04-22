@@ -3,7 +3,7 @@
             Abbott Spring,
             Westport, Montana, 55413, United
             States </i></p>
-    <div class="container px-5">
+    <div class="container  fade-up px-5">
         <div class="row gx-5 align-items-center justify-content-center">
             <div class="col-lg-8 col-xl-7 col-xxl-6">
                 <div class="my-5 text-center text-xl-start">

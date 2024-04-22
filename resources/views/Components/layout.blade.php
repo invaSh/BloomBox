@@ -20,7 +20,8 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
         integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <style>
         body {
             display: flex;
@@ -84,7 +85,7 @@
         }
 
         .dropdown-menu {
-            background-color: #F9E1B5 !important;
+            background-color: #eee !important;
         }
 
         .dropdown-item {
@@ -124,7 +125,34 @@
         .slot {
             padding-bottom: 50px;
         }
+
+        .text-hover {
+            transition: .1s;
+        }
+
+        .text-hover:hover {
+            color: #19180d6e;
+        }
     </style>
+
+    <style>
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s ease-out;
+        }
+    </style>
+
 
     @yield('css')
 
@@ -132,8 +160,8 @@
 
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+            <div class="container  fade-up">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('img/newlogo.png') }}" id="logo" alt="BloomBox">
                 </a>
@@ -142,7 +170,7 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0  ms-auto d-flex justify-content-end customUl">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/shop-all') }}">Shop All</a>
@@ -178,6 +206,45 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/about-us') }}">About us</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                |
+                            </a>
+                        </li>
+                        @auth
+                            <li class="nav-item dropdown me-3">
+                                @php
+                                    $user = App\Models\User::where('id', auth()->user()->id)->first();
+                                    $notifs = $user->notifs();
+                                    $count = $user->notifs()->count();
+                                @endphp
+                                <a class="nav-link dropdown-toggle iconHover customPos" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="bi bi-bell"></i>
+                                    @if ($count > 0)
+                                        <span class="bg-danger">{{ $count }}</span>
+                                    @endif
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end p-0" style="width: 30vw; cursor: pointer;">
+                                    @if ($notifs->isNotEmpty())
+                                        @foreach ($notifs as $item)
+                                            <li class="p-3 {{ $notifs->count() > 1 ? 'border-bottom' : '' }}">
+                                                <h5>{{ $item->description }}.</h5>
+                                                <a class="text-muted" href="{{ route('order.show', $item->subject_id) }}">
+                                                    <p class="text-hover">
+                                                        Click to view details
+                                                        <i class="bi bi-arrow-right ms-1"></i>
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    @else
+                                        <li class="text-muted ms-2">Nothing to see here..</li>
+                                    @endif
+                                </ul>
+                            </li>
+
+                        @endauth
                         <li class="nav-item d-flex">
                             <a class="nav-link active iconHover customPos" aria-current="page"
                                 href="{{ route('cart.index') }}">
@@ -185,14 +252,10 @@
                                 @if (auth()->check())
                                     @php
                                         $userId = auth()->id();
-                                        $cartItemCount = 0;
                                         $cart = \App\Models\Cart::where('user_id', $userId)->with('products')->first();
-                                        if ($cart) {
-                                            $cartItemCount = $cart->products->sum('pivot.quantity');
-                                        }
                                     @endphp
-                                    @if ($cartItemCount > 0)
-                                        <span class="bg-danger">{{ $cartItemCount }}</span>
+                                    @if ($cart && $cart->totalQuantity > 0)
+                                        <span class="bg-danger">{{ $cart->totalQuantity }}</span>
                                     @endif
                                 @endif
 
@@ -219,7 +282,8 @@
                                     {{ auth()->user()->username }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('profile.show', auth()->user()->id) }}">Your Profile</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('profile.show', auth()->user()->id) }}">Your Profile</a></li>
                                     <li><a class="dropdown-item"
                                             href="{{ route('order.list', auth()->user()->id) }}">Orders</a></li>
                                     <hr style="margin: 10px;">
@@ -316,6 +380,27 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            swup.on('animationIn', () => {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.animation = 'fadeUp 0.5s ease-out';
+                    }, index * 100);
+                });
+
+                const otherElements = document.querySelectorAll('.slot');
+                otherElements.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.style.animation = 'fadeUp 0.5s ease-out';
+                    }, index * 100);
+                });
+            });
+        });
+    </script>
+
 
     @yield('scripts')
 

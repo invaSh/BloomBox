@@ -142,6 +142,24 @@
         }
     </style>
 
+    <style>
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s ease-out;
+        }
+    </style>
+
     @yield('css')
 
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
@@ -331,8 +349,8 @@
                     <a href="#"
                         class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('storage/product-img/' . auth()->user()->imgUrl) }}" alt="" width="32"
-                            height="32" class="rounded-circle me-2">
+                        <img src="{{ asset('storage/product-img/' . auth()->user()->imgUrl) }}" alt=""
+                            width="32" height="32" class="rounded-circle me-2">
                         <strong>{{ auth()->user()->username }}</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary "
@@ -349,7 +367,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-9 offset-lg-2 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-9 offset-lg-2 d-flex flex-column align-items-center justify-content-center fade-up">
                 {{ $slot }}
             </div>
 
@@ -357,7 +375,7 @@
     </main>
 
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
     <script src="{{ asset('js/sidebars.js') }}"></script>
 
@@ -391,10 +409,29 @@
             };
             reader.readAsDataURL(event.target.files[0]);
 
-            // Display the file name
             var fileNameElement = document.getElementById('file-name');
             fileNameElement.textContent = event.target.files[0].name;
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            swup.on('animationIn', () => {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.animation = 'fadeUp 0.5s ease-out';
+                    }, index * 100);
+                });
+
+                const otherElements = document.querySelectorAll('.slot');
+                otherElements.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.style.animation = 'fadeUp 0.5s ease-out';
+                    }, index * 100);
+                });
+            });
+        });
     </script>
 
     @yield('scripts')

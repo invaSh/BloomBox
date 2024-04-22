@@ -278,13 +278,21 @@ class OrderController extends Controller
         $order->status = $validated['status'];
         $order->save();
 
+        $client = User::where('id', $order->user_id)->first();
+
         activity($order->status)
             ->causedBy(auth()->user())
             ->performedOn($order)
             ->log(' changed #' . $order->id . ' status to ' . $order->status . '.');
 
+            activity('notification')
+            ->causedBy($client)
+            ->performedOn($order)
+            ->log("Your order status has been changed to " . $order->status);
+
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
+
     public function paymentStatusUpdate(Request $request, $id)
     {
         $validated = $request->validate([

@@ -5,6 +5,8 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
 use Spatie\Activitylog\Models\Activity;
+use \Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,6 +30,29 @@ class DashboardController extends Controller
             "productsNo" => Product::sum('quantity'),
         ];
 
-        return view("/admin/dashboard", compact("dashboardData", "activities", "newOrders"));
+        $top5products = $this->topSoldProductsLast24Hours();
+
+        return view("/admin/dashboard", compact("dashboardData", "activities", "newOrders", "top5products"));
+    }
+
+    public function topSoldProductsLast24Hours()
+    {
+        $startDateTime = Carbon::now()->subHours(24);
+        $endDateTime = Carbon::now();
+
+        $topSoldProducts = DB::table('order__products')
+            ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->groupBy('product_id')
+            ->orderByDesc('total_quantity')
+            ->limit(5)
+            ->get();
+
+        $productDetails = [];
+        foreach ($topSoldProducts as $product) {
+            $productDetails[] = Product::find($product->product_id);
+        }
+
+        return $productDetails;
     }
 }

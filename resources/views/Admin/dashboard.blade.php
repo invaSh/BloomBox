@@ -152,6 +152,36 @@
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-center mt-3 text-dark">
+            @php
+                $hour = date('G');
+                $greeting = '';
+                $message = '';
+
+                if ($hour < 12) {
+                    $greeting = 'Good morning';
+                    $message = 'Good day to stay productive. Check out recent sales!';
+                } else {
+                    $greeting = 'Good afternoon';
+                    $message = 'Good job staying productive today.';
+                }
+            @endphp
+
+            <div class="card py-3 col-6 text-center">
+                <h1>{{ $greeting }}, {{ explode(' ', auth()->user()->name)[0] }}!</h1>
+                <h5 class="text-muted">{{ $message }}</h5>
+            </div>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="col-lg-6">
+
+                <canvas id="top_products"></canvas>
+            </div>
+        </div>
+
+
         <div class="row mt-5 justify-content-center text-center">
             <div class="col-lg-2 hover hover-container justify-content-center" id="recentActivity">
                 <p>Recent Activity</p>
@@ -252,6 +282,8 @@
 
 
     @section('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const recentActivityBtn = document.getElementById('recentActivity');
@@ -334,6 +366,40 @@
                     setActivityBarPosition(activityBarPosition);
                 }
 
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                let top_products = document.getElementById('top_products').getContext('2d');
+
+                let productLabels = [];
+                let productQuantities = [];
+                let backgroundColors = [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ];
+
+                @foreach ($top5products as $index => $product)
+                    productLabels.push('{{ $product->name }}');
+                    productQuantities.push('{{ $product->quantity }}');
+                @endforeach
+
+                let topProductsChart = new Chart(top_products, {
+                    type: 'bar',
+                    data: {
+                        labels: productLabels,
+                        datasets: [{
+                            label: 'Top products',
+                            data: productQuantities,
+                            backgroundColor: backgroundColors
+                        }],
+                    },
+                    options: {}
+                });
             });
         </script>
     @endsection

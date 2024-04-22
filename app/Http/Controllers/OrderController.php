@@ -114,10 +114,26 @@ class OrderController extends Controller
             $product = Product::find($productId);
 
             if ($product) {
+                if ($product->quantity < $quantity) {
+                    return redirect()->back()
+                        ->withErrors(['error' => 'Insufficient stock for product: ' . $product->name])
+                        ->withInput();
+                }
+
                 $productData[$productId] = [
                     'quantity' => $quantity,
                     'price' => $product->price * $quantity
                 ];
+
+                $product->quantity -= $quantity;
+                $product->save();
+
+                if($product->quantity <= 10){
+                    activity('low_stock')
+                    ->causedBy(auth()->user())
+                    ->performedOn($order)
+                    ->log($product->name . " is low on stock");
+                }
             }
         }
 
@@ -263,9 +279,9 @@ class OrderController extends Controller
         $order->save();
 
         activity($order->status)
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->log(' changed #' . $order->id . ' status to ' . $order->status . '.');
+            ->causedBy(auth()->user())
+            ->performedOn($order)
+            ->log(' changed #' . $order->id . ' status to ' . $order->status . '.');
 
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
@@ -283,16 +299,20 @@ class OrderController extends Controller
 
         $logMessage = '';
         if ($payment->status == 'refunded') {
-            $logMessage = ' has issued a refund for order #' . $order->id .'.';
+            $logMessage = ' has issued a refund for order #' . $order->id . '.';
             activity('refunded')
                 ->causedBy(auth()->user())
                 ->performedOn($payment)
                 ->log($logMessage);
-        }else{
-            activity('refunded')
+
+            $payment->refunder = auth()->user()->id;
+            $payment->save();
+
+        } else {
+            activity($payment->status)
                 ->causedBy(auth()->user())
                 ->performedOn($payment)
-                ->log(' changed payment status for order #' . $order->id .' to ' . $payment->status . '.');
+                ->log(' changed payment status for order #' . $order->id . ' to ' . $payment->status . '.');
         }
 
         return redirect()->back()->with('success', 'Payment status updated successfully.');

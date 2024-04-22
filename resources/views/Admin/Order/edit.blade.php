@@ -171,14 +171,27 @@
                             <button type="submit" class="btn btn-primary mt-3">Change</button>
                         </form>
                     </div>
-                    
+
                 </div>
                 <div class="row mt-3">
-                    <a href="{{ route('order.details', $order->id) }}" class="text-decoration-none"><h5 class="bg-white p-3 text-dark text-center">View order details</h5></a>
+                    <a href="{{ route('order.details', $order->id) }}" class="text-decoration-none">
+                        <h5 class="bg-white p-3 text-dark text-center">View order details</h5>
+                    </a>
                 </div>
                 <div class="row mt-3">
-                    <a href="{{ route('orders.list') }}"" class="text-decoration-none"><h5 class="bg-white p-3 text-dark text-center">Back to list</h5></a>
+                    <a href="{{ route('orders.list') }}"" class="text-decoration-none">
+                        <h5 class="bg-white p-3 text-dark text-center">Back to list</h5>
+                    </a>
                 </div>
+                @if ($payment->refunder)
+                    <div class="row mt-3">
+                        @php
+                            $refunder = \App\Models\User::find($payment->refunder);
+                        @endphp
+                        <span class="text-danger text-center">Employee {{ $refunder->name }} has issued a refund for
+                            this order.</span>
+                    </div>
+                @endif
             </div>
         </div>
 

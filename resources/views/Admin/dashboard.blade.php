@@ -172,16 +172,23 @@
                                     <img src="{{ asset('storage/product-img/' . $item->causer->imgUrl) }}"
                                         class="img" alt="">
                                     <div>
-                                        <h6 class="mb-0">
-                                            @if ($item->causer->isAdmin() || $item->causer->isEmployee())
-                                                Employee
-                                            @endif
-                                            <span class="text-info">
-                                                <a href=""
-                                                    class="text-decoration-none">{{ $item->causer->name }}</a>
-                                            </span>
-                                            {{ $item->description }}
-                                        </h6>
+                                        @if ($item->log_name === 'low_stock')
+                                            <h6>
+                                                {{ $item->description }}
+                                            </h6>
+                                        @else
+                                            <h6 class="mb-0">
+                                                @if ($item->causer->isAdmin() || $item->causer->isEmployee())
+                                                    Employee
+                                                @endif
+                                                <span class="text-info">
+                                                    <a href=""
+                                                        class="text-decoration-none">{{ $item->causer->name }}</a>
+                                                </span>
+                                                {{ $item->description }}
+                                            </h6>
+                                        @endif
+
                                         <span class="time">{{ $item->created_at->diffForHumans() }}</span>
                                     </div>
                                 </div>

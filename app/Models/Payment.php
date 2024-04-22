@@ -19,7 +19,8 @@ class Payment extends Model
         'status',
         'transaction_id',
         'billing_id',
-        'card_id'
+        'card_id',
+        'refunder'
     ];
 
     public function order()

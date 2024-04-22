@@ -62,7 +62,7 @@
                                             </button>
                                             <ul class="dropdown-menu text-primary"
                                                 aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href=" {{ route('product.show', $product->id) }}">View details</a></li>
+                                                <li><a class="dropdown-item" href=" {{ route('product.details', $product->id) }}">View details</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('product.edit', $product->id) }}">Edit</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#deleteModal{{ $product->id }}" href="#">Delete</a></li>

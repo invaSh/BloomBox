@@ -1,5 +1,21 @@
+@section('css')
+    <style>
+        .low{
+            font-size: 20px;
+        }
+    </style>
+@endsection
 <x-admin-layout>
+
+
     <div class="container project-info">
+        <div class="row my-3 ms-3">
+            <div class="col-3">
+                @if ($product->quantity <= 10)
+                    <span class="badge bg-danger low">Product is low on stock!</span>
+                @endif
+            </div>
+        </div>
         <div class="row d-flex justify-content-center align-items-center ">
             <div class="col-md-5 text-dark">
                 <div class="project-info-box mt-0">
@@ -20,8 +36,8 @@
                     <hr>
                     <p><b class="px-3">Occasions:</b>
                         @foreach ($selectedOccasions as $occasion)
-                        <span
-                        class="btn btn-outline-light text-dark p-1 px-2  my-2 rounded-3">{{ $occasion->name }}</span>
+                            <span
+                                class="btn btn-outline-light text-dark p-1 px-2  my-2 rounded-3">{{ $occasion->name }}</span>
                         @endforeach
                     </p>
                     <hr>

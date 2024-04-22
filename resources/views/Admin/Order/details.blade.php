@@ -218,6 +218,15 @@
                         <u>Back to List</u>
                     </span>
                 </a>
+                @if ($payment->refunder)
+                    <a class="dropdown-item mt-1">
+                        @php
+                            $refunder = \App\Models\User::find($payment->refunder);
+                        @endphp
+                        <span class="text-danger text-center hover">Employee {{ $refunder->name }} has issued a refund for
+                            this order.</span>
+                    </a>
+                @endif
             </h5>
         </div>
         <div class="row mt-5">

@@ -60,7 +60,7 @@ Route::middleware(['role:admin,employee'])->group(function () {
 
     Route::post('/admin/product/edit/{id}', [ProductController::class, 'update'])->name('product.update');
 
-    Route::get('/admin/product/details/{id}', [ProductController::class, 'show'])->name('product.show');
+    Route::get('/admin/product/details/{id}', [ProductController::class, 'show'])->name('product.details');
 
     Route::get('/admin/users/list', [UserController::class, 'index'])->name('users.list');
 

@@ -6,6 +6,17 @@
             object-fit: contain;
             border-radius: 50%;
         }
+
+        .page-link {
+            color: #77536e !important;
+        }
+
+        .active>.page-link,
+        .page-link.active {
+            background-color: #77536e;
+            border-color: #77536e;
+            color: #faebc2 !important;
+        }
     </style>
 @endsection
 
@@ -33,7 +44,28 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+                <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-2">
+                    <form action="{{ route('users.list') }}" method="GET" class="mb-4">
+                        <label for="search">Search:</label>
+                        <input id="search" class="form-control me-2" type="search" placeholder="Search"
+                            aria-label="Search" name="search">
+                    </form>
+                    <form action="{{ route('users.list') }}" method="GET" class="mb-4">
+                        <label for="order">Sort by:</label>
+                        <select id="order" name="orderBy" class="form-select" onchange="this.form.submit()">
+                            <option value="" selected disabled>--Select role</option>
+                            <option value="all" {{ Request::input('orderBy') == 'highest_price' ? 'selected' : '' }}>
+                                All users
+                            </option>
+                            <option value="admin" {{ Request::input('orderBy') == 'admin' ? 'selected' : '' }}>Admin
+                            </option>
+                            <option value="employee" {{ Request::input('orderBy') == 'employee' ? 'selected' : '' }}>
+                                Employee
+                            </option>
+                            <option value="user" {{ Request::input('orderBy') == 'user' ? 'selected' : '' }}>User
+                            </option>
+                        </select>
+                    </form>
                     <div>
                         @if (auth()->user()->isAdmin())
                             <a href="{{ route('users.create') }}" class="btn btn-primary"><i
@@ -41,7 +73,6 @@
                                 Add New</a>
                         @endif
                     </div>
-
                 </div>
             </div>
         </div>
@@ -52,25 +83,25 @@
                         class="table table-striped project-list-table table-nowrap align-middle table-borderless text-center">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col"></th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Username</th>
+                                <th scope="col">Role</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Options</th>
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
                                     <td><img src="{{ asset('storage/product-img/' . $user->imgUrl) }}" id="icon"
                                             alt=""></td>
-                                    <td>#{{ $user->id }} </td>
+                                    <td><strong>#{{ $user->id }}</strong></td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->username }}</td>
+                                    <td>{{ $user->role }}</td>
                                     <td>{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>
                                         <div class="dropdown drop-custom">
@@ -124,37 +155,46 @@
                                     </div>
                                 </div>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    {{-- <div class="row g-0 align-items-center pb-4">
-        <div class="col-sm-6">
-            <div>
-                <p class="mb-sm-0">Showing 1 to 10 of 57 entries</p>
-            </div>
-        </div>
-        <div class="col-sm-6">
+    <div class="row g-0 align-items-center pb-4 my-5">
+        <div class="col-sm-6 justify-content-center">
             <div class="float-sm-end">
-                <ul class="pagination mb-sm-0">
-                    <li class="page-item disabled">
-                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item">
-                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                    </li>
-                </ul>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        @if ($users->onFirstPage())
+                        @else
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="{{ $users->previousPageUrl() . '&orderBy=' . Request::input('orderBy') }}"
+                                    rel="prev" aria-label="Previous">&laquo;</a>
+                            </li>
+                        @endif
+
+                        @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                            <li class="page-item {{ $users->currentPage() == $page ? 'active' : '' }}">
+                                <a class="page-link"
+                                    href="{{ $url . '&orderBy=' . Request::input('orderBy') }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+
+                        @if ($users->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="{{ $users->nextPageUrl() . '&orderBy=' . Request::input('orderBy') }}"
+                                    rel="next" aria-label="Next">&raquo;</a>
+                            </li>
+                        @else
+                        @endif
+                    </ul>
+                </nav>
+
             </div>
         </div>
-    </div> --}}
     </div>
 
 </x-admin-layout>

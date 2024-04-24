@@ -162,6 +162,8 @@
 
     @yield('css')
 
+
+
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 </head>
 
@@ -430,6 +432,17 @@
                         element.style.animation = 'fadeUp 0.5s ease-out';
                     }, index * 100);
                 });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('sort').addEventListener('change', function() {
+                this.form.submit();
+            });
+            document.getElementById('order').addEventListener('change', function() {
+                this.form.submit();
             });
         });
     </script>

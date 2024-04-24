@@ -31,9 +31,26 @@ class ProductController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::query();
+
+        $orderBy = $request->input('orderBy');
+
+        switch ($orderBy) {
+            case 'highest_price':
+                $products->orderBy('price', 'desc');
+                break;
+            case 'lowest_price':
+                $products->orderBy('price', 'asc');
+                break;
+            default:
+                $products->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $products = $products->paginate(5);
+
         $noProducts = Product::count();
         return view('/admin/product/list', compact('products', 'noProducts'));
     }
@@ -84,9 +101,9 @@ class ProductController extends Controller
 
         if ($saved) {
             activity()
-                ->causedBy(auth()->user()) 
-                ->performedOn($product) 
-                ->log(' recently added a new product.'); 
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->log(' recently added a new product.');
 
             $occasions = $request->input('occasion');
             if ($occasions) {

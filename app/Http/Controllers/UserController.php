@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::query();
+        $role = $request->input("orderBy");
+
+        if ($role && $role !== 'all') {
+            $orders = $users->where("role", $role);
+        }
+
+        $users = $users->paginate(10);
+
         $noUsers = User::count();
 
         return view("/admin/user/list", compact("users", "noUsers"));

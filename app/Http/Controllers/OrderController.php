@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\User;
@@ -12,6 +13,7 @@ use App\Models\Payment;
 use App\Models\Order;
 use App\Models\Product;
 use Auth;
+use Spatie\Activitylog\Contracts\Activity;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -20,11 +22,12 @@ class OrderController extends Controller
     {
         $user = User::find($id);
 
-        $orders = Order::where("user_id", $id)->with([
-            'products' => function ($query) {
-                $query->withPivot('quantity');
-            }
-        ])->get();
+        $orders = Order::where("user_id", $id)
+            ->with([
+                'products' => function ($query) {
+                    $query->withPivot('quantity');
+                }
+            ])->get();
 
         $orderTotals = [];
 
@@ -128,11 +131,11 @@ class OrderController extends Controller
                 $product->quantity -= $quantity;
                 $product->save();
 
-                if($product->quantity <= 10){
+                if ($product->quantity <= 10) {
                     activity('low_stock')
-                    ->causedBy(auth()->user())
-                    ->performedOn($order)
-                    ->log($product->name . " is low on stock");
+                        ->causedBy(auth()->user())
+                        ->performedOn($order)
+                        ->log($product->name . " is low on stock");
                 }
             }
         }
@@ -225,12 +228,34 @@ class OrderController extends Controller
         return view("/admin/order/edit", compact("order", "products", "payment", "address", "billing", "card", "user"));
     }
 
-    public function list()
+
+    public function list(Request $request)
     {
-        $orders = Order::all();
+        $status = $request->input("sortBy");
+        $orderBy = $request->input("orderBy");
+
+        $orders = Order::query();
+
+        if ($status && $status !== 'all') {
+            $orders = $orders->where("status", $status);
+        }
+
+        switch ($orderBy) {
+            case 'newest':
+                $orders->orderBy('created_at', 'desc');
+                break;
+            case 'oldest':
+                $orders->orderBy('created_at', 'asc');
+                break;
+            default:
+                $orders->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $orders = $orders->paginate(10);
+
         return view("/admin/order/list", compact("orders"));
     }
-
     public function details($id)
     {
         $order = Order::findOrFail($id);
@@ -285,7 +310,7 @@ class OrderController extends Controller
             ->performedOn($order)
             ->log(' changed #' . $order->id . ' status to ' . $order->status . '.');
 
-            activity('notification')
+        activity('notification')
             ->causedBy($client)
             ->performedOn($order)
             ->log("Your order status has been changed to " . $order->status);

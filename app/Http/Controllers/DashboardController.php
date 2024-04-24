@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         $products = Product::all();
 
-        $activities = Activity::all()->whereNotIn('log_name', ['new'])->sortByDesc('created_at');
+        $activities = Activity::all()->whereNotIn('log_name', ['new','notification'])->sortByDesc('created_at');
 
         $newOrders = Activity::where('log_name', ['new'])->get()->sortByDesc('created_at');
         ;

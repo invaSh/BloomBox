@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Occasion;
 use Illuminate\Http\Request;
 
 class ShopAllController extends Controller
@@ -35,5 +36,19 @@ class ShopAllController extends Controller
         $products = $products->get();
 
         return view('User/shop-all')->with('allProducts', $products);
+    }
+
+    public function flowers($id){
+        $products = Product::where('category_id', $id)->get();
+        $category = Category::find($id)->first();
+        return view('/user/flowers', compact('products', 'category'));
+    }
+
+    public function occasions($id){
+        $occasion = Occasion::findOrFail( $id );
+
+        $products = $occasion->products()->get();
+
+        return view('/user/occasion', compact('products','occasion'));
     }
 }

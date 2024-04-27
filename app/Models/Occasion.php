@@ -14,13 +14,8 @@ class Occasion extends Model
         'description',
     ];
 
-    public function plants()
-    {
-        return $this->belongsToMany(Plant::class);
-    }
-
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'product__occasions', 'occasion_id', 'product_id');
     }
 }

@@ -160,7 +160,8 @@
             position: relative;
         }
 
-        .autocomplete-dropdown {
+        .autocomplete-dropdown,
+        .menu {
             position: absolute;
             width: 25%;
             left: 68.5%;
@@ -170,7 +171,8 @@
             padding-inline-end: 40px !important;
         }
 
-        .autocomplete-dropdown li {
+        .autocomplete-dropdown li,
+        .menu li {
             list-style-type: none !important;
             padding: 10px 0;
             cursor: pointer;
@@ -178,11 +180,14 @@
             text-align: center;
         }
 
-        .autocomplete-dropdown li a{
+        .autocomplete-dropdown li a,
+        .menu li a {
             text-decoration: none;
             color: inherit;
         }
-        .autocomplete-dropdown li:hover {
+
+        .autocomplete-dropdown li:hover,
+        .menu li:hover {
             background-color: #413555 !important;
             color: #F9E1B4 !important;
             border-radius: 30px;
@@ -212,17 +217,14 @@
                             <a class="nav-link active" aria-current="page" href="{{ url('/shop-all') }}">Shop All</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="{{ url('/occasions') }}" role="button"
+                            <a class="nav-link dropdown-toggle" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Occasions
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <ul class="dropdown-menu menu">
+                                @foreach (App\Models\Occasion::all() as $item)
+                                    <li class="py-2 ms-4"><a href="{{ route('occasions', $item->id) }}">{{ $item->name }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -230,13 +232,10 @@
                                 aria-expanded="false">
                                 Flowers
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/flowers">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <ul class="dropdown-menu menu">
+                                @foreach (App\Models\Category::all() as $item)
+                                    <li class="py-2 ms-4"><a href="{{ route('flowers', $item->id) }}">{{ $item->name }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -266,8 +265,7 @@
                                         @foreach ($notifs as $item)
                                             <li class="p-3 {{ $notifs->count() > 1 ? 'border-bottom' : '' }}">
                                                 <h5>{{ $item->description }}.</h5>
-                                                <a class="text-muted"
-                                                    href="{{ route('order.show', $item->subject_id) }}">
+                                                <a class="text-muted" href="{{ route('order.show', $item->subject_id) }}">
                                                     <p class="text-hover">
                                                         Click to view details
                                                         <i class="bi bi-arrow-right ms-1"></i>
@@ -477,7 +475,7 @@
 
                 if (query.length === 0) {
                     autocompleteList.innerHTML = '';
-                    dropdown.style.display = 'none'; 
+                    dropdown.style.display = 'none';
                     return;
                 }
 

@@ -156,15 +156,10 @@ Route::middleware(['role:user'])->group(function () {
 
     Route::get('/shop-all', [ShopAllController::class, 'index'])->name('shop-all');
 
+    Route::get('/flowers/{id}', [ShopAllController::class, 'flowers'])->name('flowers');
 
-    Route::get('/occasions', function () {
-        return view('occasion');
-    });
+    Route::get('/occasions/{id}', [ShopAllController::class, 'occasions'])->name('occasions');
 
-
-    Route::get('/flowers', function () {
-        return view('flowers');
-    });
 
     Route::get('/about-us', function () {
         return view('User/about-us');

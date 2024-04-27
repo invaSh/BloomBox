@@ -253,7 +253,7 @@
                 style="width: 280px; position: fixed; height: 100%; overflow-y: auto;">
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
                     <!-- Adjust the height as needed -->
-                    <a href="/" class="text-center d-block">
+                    <a href="/admin" class="text-center d-block">
                         <img src="{{ asset('img/logo_nobg.png') }}" class="img-fluid" id="logo" alt="">
                     </a>
                 </div>

@@ -19,11 +19,27 @@ class UserController extends Controller
             $orders = $users->where("role", $role);
         }
 
+        $search = $request->input('search');
+        if ($search) {
+            $users->where(function ($query) use ($search) {
+                $query->where('id', 'like', '%' . $search . '%')
+                    ->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('role', 'like', '%' . $search . '%');
+            });
+        }
+
         $users = $users->paginate(10);
 
         $noUsers = User::count();
 
         return view("/admin/user/list", compact("users", "noUsers"));
+    }
+
+    public function getAll ()
+    {
+        $users = User::all();
+        return response()->json($users);
     }
 
 
@@ -66,7 +82,7 @@ class UserController extends Controller
         if ($request->hasFile('imgUrl')) {
             $fileName = $request->file('imgUrl')->store('product-img', 'public');
         }
-        
+
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
@@ -105,14 +121,14 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-    
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6|confirmed',
         ]);
-    
+
         $validator->setCustomMessages([
             'username.unique' => 'Username already exists. Choose a different username.',
             'email.unique' => 'Email already exists. Choose a different email.',
@@ -120,42 +136,42 @@ class UserController extends Controller
             'password.min' => 'Password must be at least 6 characters long.',
             'password.confirmed' => 'Password confirmation does not match.',
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-    
-        $fileName='';
+
+        $fileName = '';
 
         if ($request->hasFile('imgUrl')) {
             $fileName = $request->file('imgUrl')->store('product-img', 'public');
             $user->imgUrl = $fileName;
         }
-    
+
         $user->update($request->except('imgUrl'));
-    
+
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
-            if(!$user->save()){
+            if (!$user->save()) {
 
                 return redirect()->route('users.list')->with('error', 'Error updating user!');
             }
         }
-    
+
         return redirect()->route('users.list')->with('success', 'User updated successfully!');
     }
-    
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $confirmation = $user->delete();
 
-        if(!$confirmation){
-            return redirect()->back()->with('error','There was an error deleting the user. Try again.');
+        if (!$confirmation) {
+            return redirect()->back()->with('error', 'There was an error deleting the user. Try again.');
         }
 
-        return redirect('/admin/users/list')->with('success','User deleted successfully!');
+        return redirect('/admin/users/list')->with('success', 'User deleted successfully!');
     }
 }

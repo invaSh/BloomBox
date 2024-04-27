@@ -133,6 +133,10 @@
         .text-hover:hover {
             color: #19180d6e;
         }
+
+        .autocomplete-dropdown {
+            display: none;
+        }
     </style>
 
     <style>
@@ -150,6 +154,38 @@
 
         .fade-up {
             animation: fadeUp 0.5s ease-out;
+        }
+
+        #navbarSupportedContent {
+            position: relative;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            width: 25%;
+            left: 68.5%;
+            top: 80%;
+            border-radius: 0 0 30px 30px;
+            background-color: #F9E1B4 !important;
+            padding-inline-end: 40px !important;
+        }
+
+        .autocomplete-dropdown li {
+            list-style-type: none !important;
+            padding: 10px 0;
+            cursor: pointer;
+            transition: .1s;
+            text-align: center;
+        }
+
+        .autocomplete-dropdown li a{
+            text-decoration: none;
+            color: inherit;
+        }
+        .autocomplete-dropdown li:hover {
+            background-color: #413555 !important;
+            color: #F9E1B4 !important;
+            border-radius: 30px;
         }
     </style>
 
@@ -218,8 +254,8 @@
                                     $notifs = $user->notifs();
                                     $count = $user->notifs()->count();
                                 @endphp
-                                <a class="nav-link dropdown-toggle iconHover customPos" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle iconHover customPos" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-bell"></i>
                                     @if ($count > 0)
                                         <span class="bg-danger">{{ $count }}</span>
@@ -230,7 +266,8 @@
                                         @foreach ($notifs as $item)
                                             <li class="p-3 {{ $notifs->count() > 1 ? 'border-bottom' : '' }}">
                                                 <h5>{{ $item->description }}.</h5>
-                                                <a class="text-muted" href="{{ route('order.show', $item->subject_id) }}">
+                                                <a class="text-muted"
+                                                    href="{{ route('order.show', $item->subject_id) }}">
                                                     <p class="text-hover">
                                                         Click to view details
                                                         <i class="bi bi-arrow-right ms-1"></i>
@@ -296,11 +333,18 @@
                             </li>
                         @endauth
                     </ul>
-                    <form class="d-flex box mx-3" role="search">
-                        <input type="text" placeholder="Search...">
-                        <a href="#">
-                            <i class="bi bi-search logoI"></i>
-                        </a>
+                    <form action="" role="search">
+                        <div class="d-flex box mx-3">
+                            <input type="search" placeholder="Search..." id="searchInput" aria-label="Search">
+                            <a href="#">
+                                <i class="bi bi-search logoI"></i>
+                            </a>
+                        </div>
+                        <div class="autocomplete-dropdown bg-light">
+                            <ul id="autocompleteList">
+
+                            </ul>
+                        </div>
                     </form>
 
                 </div>
@@ -400,6 +444,73 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var searchInput = document.getElementById('searchInput');
+            var autocompleteList = document.getElementById('autocompleteList');
+            var dropdown = document.querySelector('.autocomplete-dropdown');
+
+            var boxContainer = document.querySelector('.box');
+            var inputField = boxContainer.querySelector('input');
+
+            function toggleBox() {
+                var hasText = inputField.value.trim().length > 0;
+                var isFocused = document.activeElement === inputField;
+
+                if (hasText || isFocused) {
+                    boxContainer.style.minWidth = '300px';
+                    inputField.style.minWidth = '300px';
+                    inputField.style.textAlign = 'center';
+                } else {
+                    boxContainer.style.width = '47px';
+                    inputField.style.minWidth = '47px';
+                }
+            }
+
+            inputField.addEventListener('input', () => {
+                toggleBox();
+            });
+
+            searchInput.addEventListener('keyup', () => {
+                var query = searchInput.value.trim();
+
+                if (query.length === 0) {
+                    autocompleteList.innerHTML = '';
+                    dropdown.style.display = 'none'; 
+                    return;
+                }
+
+                fetch("/autocomplete?query=" + query)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok.");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        autocompleteList.innerHTML = '';
+                        console.log(data)
+                        console.log(data.name)
+
+                        data.forEach(product => {
+                            var listItem = document.createElement("li");
+                            var anchor = document.createElement("a");
+                            anchor.textContent = product.name;
+                            anchor.href = `/product/${product.id}`;
+                            listItem.appendChild(anchor);
+                            autocompleteList.appendChild(listItem);
+                        });
+
+                        dropdown.style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error("Fetch error: ", error);
+                    });
+            });
+        });
+    </script>
+
 
 
     @yield('scripts')

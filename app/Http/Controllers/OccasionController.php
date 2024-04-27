@@ -9,7 +9,7 @@ class OccasionController extends Controller
 {
     public function index()
     {
-        $occasions = Occasion::paginate(5);
+        $occasions = Occasion::paginate(10);
         $noOccasions = Occasion::count();
 
         return view("admin/occasion/list", compact("occasions", "noOccasions"));

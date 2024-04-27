@@ -64,6 +64,8 @@ Route::middleware(['role:admin,employee'])->group(function () {
 
     Route::get('/admin/users/list', [UserController::class, 'index'])->name('users.list');
 
+    Route::get('/users/getall', [UserController::class, 'getAll'])->name('users.getall');
+
     Route::get('/admin/users/details/{id}', [UserController::class, 'show'])->name('users.show');
 
     Route::get('/admin/orders/list', [OrderController::class, 'list'])->name('orders.list');
@@ -96,7 +98,9 @@ Route::middleware(['role:admin'])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['role:user'])->group(function () {
+
+    Route::get('/autocomplete', [HomeController::class, 'autocomplete'])->name('product.autocomplete');
 
     Route::get('/product/{id}', [HomeController::class, 'show'])->name('product.show');
 

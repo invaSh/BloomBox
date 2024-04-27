@@ -49,7 +49,7 @@ class ProductController extends Controller
                 break;
         }
 
-        $products = $products->paginate(5);
+        $products = $products->paginate(15);
 
         $noProducts = Product::count();
         return view('/admin/product/list', compact('products', 'noProducts'));

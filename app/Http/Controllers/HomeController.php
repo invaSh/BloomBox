@@ -40,17 +40,20 @@ class HomeController extends Controller
 
         return view('/user/home/product', compact('product', 'category', 'relatedProducts'));
     }
-    public function edit($id)
-    {
-        //
-    }
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    public function destroy($id)
+    public function autocomplete(Request $request)
     {
-        //
+        $query = $request->input('query');
+
+        $products = Product::where('name', 'like', '%' . $query . '%')->get();
+
+        $productData = $products->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+            ];
+        });
+
+        return response()->json($productData);
     }
 }

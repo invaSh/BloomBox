@@ -45,7 +45,8 @@
                             aria-label="Search" name="search">
                     </form>
                     <div class="mt-4">
-                        <a href="{{ route('occasion.create') }}" class="btn btn-primary"><i class="bx bx-plus me-1 "></i>
+                        <a href="{{ route('occasion.create') }}" class="btn btn-primary"><i
+                                class="bx bx-plus me-1 "></i>
                             Add New</a>
                     </div>
                 </div>
@@ -128,8 +129,7 @@
 
                         @foreach ($occasions->getUrlRange(1, $occasions->lastPage()) as $page => $url)
                             <li class="page-item {{ $occasions->currentPage() == $page ? 'active' : '' }}">
-                                <a class="page-link"
-                                    href="{{ $url }}">{{ $page }}</a>
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                             </li>
                         @endforeach
 
@@ -149,4 +149,39 @@
         </div>
     </div>
 
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('search');
+                const userTable = document.querySelector('.project-list-table');
+                const tableRows = userTable.getElementsByTagName('tr');
+
+                searchInput.addEventListener('keyup', function() {
+                    const query = searchInput.value.trim().toLowerCase();
+
+                    for (let i = 0; i < tableRows.length; i++) {
+                        const row = tableRows[i];
+
+                        let rowContainsQuery = false;
+
+                        for (let j = 0; j < row.cells.length; j++) {
+                            const cell = row.cells[j];
+                            const cellContent = cell.textContent.trim().toLowerCase();
+
+                            if (cellContent.includes(query)) {
+                                rowContainsQuery = true;
+                                break;
+                            }
+                        }
+
+                        if (rowContainsQuery) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        </script>
+    @endsection
 </x-admin-layout>

@@ -43,7 +43,8 @@
                                                     <div class="col-md-2 col-lg-2 col-xl-2">
                                                         Price per one: ${{ $item->price }}
                                                     </div>
-                                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    <form class="col-md-2 col-lg-2 col-xl-2 text-center" method="post" action="{{ route('cart.edit', $item->id) }}">
+                                                        @csrf
                                                         <div class="d-flex align-items-center quantityBox"
                                                             style="border: transparent" data-price="{{ $item->price }}"
                                                             id="price-{{ $item->id }}">
@@ -55,7 +56,12 @@
                                                             <span class="fs-3 increase-quantity"
                                                                 id="increase-quantity-{{ $item->id }}">&#65291;</span>
                                                         </div>
-                                                    </div>
+                                                        <input type="hidden" value="{{ $item->id }}">
+                                                        <button type="submit"
+                                                            class="btn btn-link text-decoration-none text-dark">
+                                                            Update
+                                                        </button>
+                                                    </form>
                                                     <form action="{{ route('cart.destroy', $item->id) }}"
                                                         method="post"
                                                         class="col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center">
@@ -91,7 +97,8 @@
                                         </div>
                                         @if ($products->isNotEmpty())
                                             <input type="hidden" name="quantity" value="{{ $itemsC }}">
-                                            <a href="{{ route('order.create', $cart->id) }}" type="submit" data-mdb-button-init data-mdb-ripple-init
+                                            <a href="{{ route('order.create', $cart->id) }}" type="submit"
+                                                data-mdb-button-init data-mdb-ripple-init
                                                 class="btn btn-outline-light btn-block btn-lg"
                                                 data-mdb-ripple-color="dark">Proceed to checkout</a>
                                         @endif

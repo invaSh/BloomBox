@@ -106,6 +106,8 @@ Route::middleware(['role:user'])->group(function () {
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
+    Route::post('/cart/{productId}/edit', [CartController::class, 'edit'])->name('cart.edit');
+
     Route::post('/user/cart', [CartController::class, 'store'])->name('cart.store');
 
     Route::post('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');

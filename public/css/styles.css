@@ -373,6 +373,7 @@ tr {
     border: 1px solid #cfcfcf79;
     display: flex;
     align-items: center;
+    margin-top: 30px;
 }
 .quantityBox input {
     width: 19px !important;

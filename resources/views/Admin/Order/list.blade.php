@@ -72,7 +72,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div>
+                <div class="table-responsive">
                     <table
                         class="table table-striped project-list-table table-nowrap align-middle table-borderless text-center">
                         <thead>

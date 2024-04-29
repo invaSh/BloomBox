@@ -80,10 +80,7 @@ class CartController extends Controller
         $cart = Cart::where('user_id', auth()->id())->firstOrFail();
         $quantityChange = $request->input('quantity'); 
 
-        // dd(["quantity: " => $quantityChange, "product id: " => $productId]);
         $product = $cart->products()->findOrFail($productId);
-
-        // $newQuantity = $product->pivot->quantity + $quantityChange;
 
         if ($quantityChange > 0) {
             $cart->products()->updateExistingPivot($productId, ['quantity' => $quantityChange]);

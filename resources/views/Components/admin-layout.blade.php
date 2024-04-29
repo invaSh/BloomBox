@@ -52,6 +52,10 @@
 
         .sidebar {
             background-image: linear-gradient(to bottom left, #413555, #262130, #19180D);
+            width: 280px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
         }
 
         .nav-link {
@@ -130,14 +134,29 @@
         .drop-custom .dropdown-toggle {
             background: transparent;
             color: #000;
-            /* Adjust color as needed */
             border: none;
-            /* Removes border */
+        }
+
+        .list-responsive{
+            flex-direction: column;
         }
 
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 1607px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .list-responsive {
+                flex-direction: row;
+                justify-content: center;
             }
         }
     </style>
@@ -249,8 +268,7 @@
 
     <main class="container-fluid h-100">
         <div class="row h-100">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark col-lg-3 sidebar"
-                style="width: 280px; position: fixed; height: 100%; overflow-y: auto;">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark col-lg-3 sidebar">
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
                     <!-- Adjust the height as needed -->
                     <a href="/admin" class="text-center d-block">
@@ -258,7 +276,7 @@
                     </a>
                 </div>
                 <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
+                <ul class="nav nav-pills mb-auto list-responsive">
                     <li>
                         <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="bi bi-speedometer" width="16" height="16"></i>
@@ -347,7 +365,7 @@
                     </li>
                 </ul>
                 <hr>
-                <div class="dropdown">
+                <div class="dropdown  d-flex justify-content-center">
                     <a href="#"
                         class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -355,7 +373,7 @@
                             width="32" height="32" class="rounded-circle me-2">
                         <strong>{{ auth()->user()->username }}</strong>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary "
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow bg-secondary"
                         aria-lbelledby="dropdownUser1">
                         <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
                         <li>
@@ -446,39 +464,7 @@
             });
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search');
-            const userTable = document.querySelector('.project-list-table');
-            const tableRows = userTable.getElementsByTagName('tr');
 
-            searchInput.addEventListener('keyup', function() {
-                const query = searchInput.value.trim().toLowerCase();
-
-                for (let i = 0; i < tableRows.length; i++) {
-                    const row = tableRows[i];
-
-                    let rowContainsQuery = false;
-
-                    for (let j = 0; j < row.cells.length; j++) {
-                        const cell = row.cells[j];
-                        const cellContent = cell.textContent.trim().toLowerCase();
-
-                        if (cellContent.includes(query)) {
-                            rowContainsQuery = true;
-                            break;
-                        }
-                    }
-
-                    if (rowContainsQuery) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                }
-            });
-        });
-    </script>
     @yield('scripts')
 
 </body>

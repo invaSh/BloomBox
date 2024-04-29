@@ -202,28 +202,31 @@
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
         <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-            <div class="container  fade-up">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/newlogo.png') }}" id="logo" alt="BloomBox">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <div class="container fade-up">
+                <div class="text-center d-flex justify-content-between">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="{{ asset('img/newlogo.png') }}" id="logo" alt="BloomBox">
+                    </a>
+                    <button class="navbar-toggler" style="font-size: 25px" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list-ul text-light"></i>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0  ms-auto d-flex justify-content-end customUl">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/shop-all') }}">Shop All</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Occasions
                             </a>
                             <ul class="dropdown-menu menu">
                                 @foreach (App\Models\Occasion::all() as $item)
-                                    <li class="py-2 ms-4"><a href="{{ route('occasions', $item->id) }}">{{ $item->name }}</a></li>
+                                    <li class="py-2 ms-4"><a
+                                            href="{{ route('occasions', $item->id) }}">{{ $item->name }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
@@ -234,73 +237,69 @@
                             </a>
                             <ul class="dropdown-menu menu">
                                 @foreach (App\Models\Category::all() as $item)
-                                    <li class="py-2 ms-4"><a href="{{ route('flowers', $item->id) }}">{{ $item->name }}</a></li>
+                                    <li class="py-2 ms-4"><a
+                                            href="{{ route('flowers', $item->id) }}">{{ $item->name }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url('/about-us') }}">About us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                |
-                            </a>
-                        </li>
-                        @auth
-                            <li class="nav-item dropdown me-3">
-                                @php
-                                    $user = App\Models\User::where('id', auth()->user()->id)->first();
-                                    $notifs = $user->notifs();
-                                    $count = $user->notifs()->count();
-                                @endphp
-                                <a class="nav-link dropdown-toggle iconHover customPos" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-bell"></i>
-                                    @if ($count > 0)
-                                        <span class="bg-danger">{{ $count }}</span>
-                                    @endif
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end p-0" style="width: 30vw; cursor: pointer;">
-                                    @if ($notifs->isNotEmpty())
-                                        @foreach ($notifs as $item)
-                                            <li class="p-3 {{ $notifs->count() > 1 ? 'border-bottom' : '' }}">
-                                                <h5>{{ $item->description }}.</h5>
-                                                <a class="text-muted" href="{{ route('order.show', $item->subject_id) }}">
-                                                    <p class="text-hover">
-                                                        Click to view details
-                                                        <i class="bi bi-arrow-right ms-1"></i>
-                                                    </p>
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    @else
-                                        <li class="text-muted ms-2">Nothing to see here..</li>
-                                    @endif
-                                </ul>
-                            </li>
-
-                        @endauth
-                        <li class="nav-item d-flex">
-                            <a class="nav-link active iconHover customPos" aria-current="page"
-                                href="{{ route('cart.index') }}">
-                                <i class="bi bi-basket"></i>
-                                @if (auth()->check())
+                        <div class="d-flex justify-content-center">
+                            @auth
+                                <li class="nav-item dropdown me-3">
                                     @php
-                                        $userId = auth()->id();
-                                        $cart = \App\Models\Cart::where('user_id', $userId)->with('products')->first();
+                                        $user = App\Models\User::where('id', auth()->user()->id)->first();
+                                        $notifs = $user->notifs();
+                                        $count = $user->notifs()->count();
                                     @endphp
-                                    @if ($cart && $cart->totalQuantity > 0)
-                                        <span class="bg-danger">{{ $cart->totalQuantity }}</span>
-                                    @endif
-                                @endif
+                                    <a class="nav-link dropdown-toggle iconHover customPos" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-bell"></i>
+                                        @if ($count > 0)
+                                            <span class="bg-danger">{{ $count }}</span>
+                                        @endif
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end p-0" style="width: 30vw; cursor: pointer;">
+                                        @if ($notifs->isNotEmpty())
+                                            @foreach ($notifs as $item)
+                                                <li class="p-3 {{ $notifs->count() > 1 ? 'border-bottom' : '' }}">
+                                                    <h5>{{ $item->description }}.</h5>
+                                                    <a class="text-muted"
+                                                        href="{{ route('order.show', $item->subject_id) }}">
+                                                        <p class="text-hover">
+                                                            Click to view details
+                                                            <i class="bi bi-arrow-right ms-1"></i>
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li class="text-muted ms-2">Nothing to see here..</li>
+                                        @endif
+                                    </ul>
+                                </li>
 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                |
-                            </a>
-                        </li>
+                            @endauth
+                            <li class="nav-item d-flex">
+                                <a class="nav-link active iconHover customPos" aria-current="page"
+                                    href="{{ route('cart.index') }}">
+                                    <i class="bi bi-basket"></i>
+                                    @if (auth()->check())
+                                        @php
+                                            $userId = auth()->id();
+                                            $cart = \App\Models\Cart::where('user_id', $userId)
+                                                ->with('products')
+                                                ->first();
+                                        @endphp
+                                        @if ($cart && $cart->totalQuantity > 0)
+                                            <span class="bg-danger">{{ $cart->totalQuantity }}</span>
+                                        @endif
+                                    @endif
+
+                                </a>
+                            </li>
+                        </div>
                         @guest
                             <li class="nav-item">
 
@@ -331,7 +330,7 @@
                             </li>
                         @endauth
                     </ul>
-                    <form action="" role="search">
+                    <form action="" role="search" class="d-flex justify-content-center">
                         <div class="d-flex box mx-3">
                             <input type="search" placeholder="Search..." id="searchInput" aria-label="Search">
                             <a href="#">

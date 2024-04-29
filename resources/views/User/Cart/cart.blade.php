@@ -46,7 +46,7 @@
                                                     <form class="col-md-2 col-lg-2 col-xl-2 text-center" method="post" action="{{ route('cart.edit', $item->id) }}">
                                                         @csrf
                                                         <div class="d-flex align-items-center quantityBox"
-                                                            style="border: transparent" data-price="{{ $item->price }}"
+                                                            style="border: transparent; margin-top: 30px" data-price="{{ $item->price }}"
                                                             id="price-{{ $item->id }}">
                                                             <span class="fs-2 decrease-quantity"
                                                                 id="decrease-quantity-{{ $item->id }}">&#65293;</span>

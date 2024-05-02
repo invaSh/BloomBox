@@ -137,7 +137,7 @@
             border: none;
         }
 
-        .list-responsive{
+        .list-responsive {
             flex-direction: column;
         }
 
@@ -461,6 +461,34 @@
             });
             document.getElementById('order').addEventListener('change', function() {
                 this.form.submit();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search');
+            const userTable = document.querySelector('.project-list-table');
+            const tableRows = userTable.getElementsByTagName('tr');
+            searchInput.addEventListener('keyup', function() {
+                const query = searchInput.value.trim().toLowerCase();
+                for (let i = 0; i < tableRows.length; i++) {
+                    const row = tableRows[i];
+                    let rowContainsQuery = false;
+                    for (let j = 0; j < row.cells.length; j++) {
+                        const cell = row.cells[j];
+                        const cellContent = cell.textContent.trim().toLowerCase();
+                        if (cellContent.includes(query)) {
+                            rowContainsQuery = true;
+                            break;
+                        }
+                    }
+                    if (rowContainsQuery) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
             });
         });
     </script>

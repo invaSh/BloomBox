@@ -342,10 +342,10 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <form method="POST" action="{{ route('billing.store') }}"
+                                                <form method="post" action="{{ route('billing.store') }}"
                                                     id="billing-form" class="mt-3">
+                                                    @csrf
                                                     <div class="row">
-                                                        @csrf
                                                         <div class="row">
                                                             <div class="col-lg-4">
                                                                 <div class="mb-3">

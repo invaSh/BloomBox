@@ -8,7 +8,7 @@
 <x-admin-layout>
 
 
-    <div class="container project-info">
+    <div class="container project-info mb-5">
         <div class="row my-3 ms-3">
             <div class="col-3">
                 @if ($product->quantity <= 10)
@@ -28,7 +28,7 @@
                     <hr>
                     <p><b class="px-3">Name:</b>{{ $product->name }}</p>
                     <hr>
-                    <p><b class="px-3">Price:</b>{{ $product->price }}</p>
+                    <p><b class="px-3">Price:</b>${{ $product->price }}</p>
                     <hr>
                     <p><b class="px-3">Quantity:</b> {{ $product->quantity }}</p>
                     <hr>
@@ -87,27 +87,6 @@
                     <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}" href="#"
                         class="btn btn-danger btn-twitter btn-circle btn-icon mr-5 mb-0">Delete</i></a>
                 </p>
-            </div>
-            <div class="project-info-box col-12 text-center">
-                <p><b>Reviews:</b></p>
-                <hr>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio voluptate cum cumque voluptatum.
-                        Illo nisi eveniet aliquam itaque minus amet? Maiores amet hic dolorum nisi provident? Nam dolor
-                        eveniet quasi.
-                </div>
-                <hr>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio voluptate cum cumque voluptatum.
-                        Illo nisi eveniet aliquam itaque minus amet? Maiores amet hic dolorum nisi provident? Nam dolor
-                        eveniet quasi.
-                </div>
-                <hr>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio voluptate cum cumque voluptatum.
-                        Illo nisi eveniet aliquam itaque minus amet? Maiores amet hic dolorum nisi provident? Nam dolor
-                        eveniet quasi.
-                </div>
             </div>
 
         </div>

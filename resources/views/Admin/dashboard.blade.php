@@ -244,7 +244,7 @@
                                         {{ $item->subject_type == 'App\Models\Occasion'
                                             ? route('occasion.edit', $item->subject_id)
                                             : ($item->subject_type == 'App\Models\Product'
-                                                ? route('product.show', $item->subject_id)
+                                                ? route('product.details', $item->subject_id)
                                                 : ($item->subject_type == 'App\Models\Category'
                                                     ? route('category.edit', $item->subject_id)
                                                     : ($item->subject_type == 'App\Models\Order'

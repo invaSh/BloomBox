@@ -15,10 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cart__products', function (Blueprint $table) {
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('cart_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('cart_id')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
+            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('set null');
             $table->integer('quantity')->nullable();
             $table->timestamps();
         });

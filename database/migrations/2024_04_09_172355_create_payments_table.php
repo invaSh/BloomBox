@@ -21,8 +21,8 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed', 'failed','refunded']);
             $table->unsignedBigInteger('card_id')->nullable();
             $table->unsignedBigInteger('billing_id')->nullable();
-            $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
-            $table->foreign('billing_id')->references('id')->on('billings')->onDelete('cascade');
+            $table->foreign('card_id')->references('id')->on('cards')->onDelete('set null');
+            $table->foreign('billing_id')->references('id')->on('billings')->onDelete('set null');
             $table->bigInteger('refunder')->nullable();
             $table->timestamps();
     

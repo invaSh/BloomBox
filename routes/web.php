@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/form', [TaskController::class, 'index'])->name('form');
+
 Route::get('/register', [AccountController::Class, 'register'])->name('register');
 
 Route::post('/register', [AccountController::class, 'registerPost'])->name('register.post');
@@ -80,7 +82,7 @@ Route::middleware(['role:admin,employee'])->group(function () {
     
     Route::post('/admin/order/payment/status/update/{id}', [OrderController::class, 'paymentStatusUpdate'])->name('payment.update');
 
-
+    
 });
 
 Route::middleware(['role:admin'])->group(function () {
@@ -134,27 +136,27 @@ Route::middleware(['role:user'])->group(function () {
     
     Route::get('/order/{userId}/list/address', [AddressController::class, 'index'])->name('address.list');
     
-    Route::get('/order/{userId}/list/billing', [BillingController::class, 'index'])->name('billing.list');
+    Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');
     
     Route::post('/billing/{id}', [BillingController::class, 'update'])->name('billing.update');
     
     Route::post('/billing/{id}/delete', [BillingController::class, 'destroy'])->name('billing.destroy');
     
-    Route::get('/order/{userId}/list/card', [CardController::class, 'index'])->name('card.list');
-    
-    Route::post('/card/{id}/delete', [CardController::class, 'destroy'])->name('card.destroy');
+    Route::get('/order/{userId}/list/billing', [BillingController::class, 'index'])->name('billing.list');
+
+    Route::post('/card/store', [CardController::class, 'store'])->name('card.store');
     
     Route::post('/card/{id}', [CardController::class, 'update'])->name('card.update');
+
+    Route::post('/card/{id}/delete', [CardController::class, 'destroy'])->name('card.destroy');
+
+    Route::get('/order/{userId}/list/card', [CardController::class, 'index'])->name('card.list');
     
     Route::get('/order/{userId}/list/profile', [ProfileController::class, 'show'])->name('profile.show');
 
     Route::post('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::get('/thankyou', [OrderController::class, 'thanks'])->name('order.thanku');
-
-    Route::post('/billing/store', [BillingController::class, 'store'])->name('billing.store');
-
-    Route::post('/card/store', [CardController::class, 'store'])->name('card.store');
 
     Route::get('/shop-all', [ShopAllController::class, 'index'])->name('shop-all');
 
@@ -171,6 +173,9 @@ Route::middleware(['role:user'])->group(function () {
 Route::get('/admin/accessdenied', function () {
     return view('/admin/accessdenied');
 });
+
+
+Route::get('/task', [TaskController::class, 'index'])->name('task');
 
 
 
